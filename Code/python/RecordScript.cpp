@@ -1,10 +1,10 @@
 #include "RecordScript.h"
 #include "PyAgent.h"
 #include <qfile.h>
-#include <QTimer.h>
-#include <QTextStream.h>
+#include <QTimer>
+#include <QTextStream>
 #include <qreadwritelock.h>
-#include <QDir.h>
+#include <QDir>
 #include <QCoreApplication>
 
 namespace Py

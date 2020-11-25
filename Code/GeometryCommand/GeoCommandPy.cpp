@@ -25,7 +25,6 @@
 #include "GeometryCommand/GeoCommandMakeSweep.h"
 #include "GeometryCommand/GeoCommandGeoSplitter.h"
 #include "GeometryCommand/GeoCommandMakeFillHole.h"
-#include "GeometryCommand/GeoCommandMakeRemoveSurface.h"
 #include <QMap>
 #include <QPair>
 namespace Command
@@ -624,20 +623,6 @@ namespace Command
 			if (set != nullptr) c->setEditData(set);
 		}
 
-		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
-		if (!success) warning();
-	}
-
-	void GeometryCommandPy::MakeRemoveSurface(QMultiHash<Geometry::GeometrySet*, int> faces, int editID)
-	{
-		Command::CommandMakeRemoveSurface* c = new Command::CommandMakeRemoveSurface(_mainWindow, _preWindow);
-		c->setShapeList(faces);
-		if (editID > 0) 
-		{
-			Geometry::GeometrySet* set = Geometry::GeometryData::getInstance()->getGeometrySetByID(editID);
-			if (set != nullptr) c->setEditData(set);
-		}
-		
 		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
 		if (!success) warning();
 	}
@@ -1456,29 +1441,5 @@ void GEOMETRYCOMMANDAPI MakeFillHole(char* faces, int editID)
 	}
 
 	Command::GeometryCommandPy::MakeFillHole(shapeHash, editID);
-}
-
-void GEOMETRYCOMMANDAPI MakeRemoveSurface(char* faces, int editID)
-{
-	QString cface = QString(faces);
-
-	QStringList setInfos = cface.split(";");
-	QMultiHash<Geometry::GeometrySet*, int> shapeHash;
-	Geometry::GeometryData* data = Geometry::GeometryData::getInstance();
-	for (QString setinfo : setInfos)
-	{
-		QStringList setin = setinfo.split(":");
-		int setid = setin.at(0).toInt();
-		auto set = data->getGeometrySetByID(setid);
-		if (set == nullptr) continue;
-		QStringList edges = setin.at(1).split(",");
-		for (QString e : edges)
-		{
-			int index = e.toInt();
-			shapeHash.insert(set, index);
-		}
-	}
-
-	Command::GeometryCommandPy::MakeRemoveSurface(shapeHash, editID);
 }
 

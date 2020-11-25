@@ -9,22 +9,22 @@
 namespace FastCAEDesigner{
 	EditorPathValue::EditorPathValue(QWidget *parent) :
 		QDialog(parent),
-		_ui(new Ui::EditorPathValue)
+		ui(new Ui::EditorPathValue)
 	{
-		_ui->setupUi(this);
+		ui->setupUi(this);
 		Init();
 	}
 	EditorPathValue::EditorPathValue(DataProperty::ParameterPath* model, QWidget *parent) :
 		QDialog(parent),
-		_ui(new Ui::EditorPathValue),
+		ui(new Ui::EditorPathValue),
 		_model(model)
 	{
-		_ui->setupUi(this);
+		ui->setupUi(this);
 		Init();
 	}
 	EditorPathValue::~EditorPathValue()
 	{
-		delete _ui;
+		delete ui;
 		_usedNameList.clear();
 	}
 
@@ -37,17 +37,17 @@ namespace FastCAEDesigner{
 		UpdateDataToUi();
 	//	UpdateUiDisplay(false);
 		InitErrorList();
-		connect(_ui->OkPBtn, SIGNAL(clicked()), this, SLOT(OnOkPBtnClicked()));
-		connect(_ui->CancelPBtn, SIGNAL(clicked()), this, SLOT(close()));
-		connect(_ui->TypeCB, SIGNAL(currentIndexChanged(int)), this, SLOT(OnComboxChanged(int)));
-		connect(_ui->PathPBtn, SIGNAL(clicked()), this, SLOT(OnPathPBtnClicked()));
+		connect(ui->OkPBtn, SIGNAL(clicked()), this, SLOT(OnOkPBtnClicked()));
+		connect(ui->CancelPBtn, SIGNAL(clicked()), this, SLOT(close()));
+		connect(ui->TypeCB, SIGNAL(currentIndexChanged(int)), this, SLOT(OnComboxChanged(int)));
+		connect(ui->PathPBtn, SIGNAL(clicked()), this, SLOT(OnPathPBtnClicked()));
 	}
 	void EditorPathValue::UpdateUiDisplay(bool l)
 	{
-		_ui->label_3->setVisible(l);
-		_ui->FIleSuffixLE->setVisible(l);
-		_ui->label_4->setVisible(l);
-		_ui->ValueLE->setText("");//Added xvdongming 2020-02-13 在切换路径类型时，清除原来的数据，避免数据错误。
+		ui->label_3->setVisible(l);
+		ui->FIleSuffixLE->setVisible(l);
+		ui->label_4->setVisible(l);
+		ui->ValueLE->setText("");//Added xvdongming 2020-02-13 在切换路径类型时，清除原来的数据，避免数据错误。
 	}
 	void EditorPathValue::InitErrorList()
 	{
@@ -62,7 +62,7 @@ namespace FastCAEDesigner{
 	{
 		int type;
 		QString s;
-		_ui->NameLE->setText(_model->getDescribe());
+		ui->NameLE->setText(_model->getDescribe());
 
 		switch (_model->getType())
 		{
@@ -86,36 +86,36 @@ namespace FastCAEDesigner{
 			break;
 		}
 
-		_ui->TypeCB->setCurrentIndex(type);
+		ui->TypeCB->setCurrentIndex(type);
 
 		int suffixError = IsFileSuffixSure(_model->getSuffix());
 		QString suffix;
 		if (suffixError == 0)
 			suffix = _model->getSuffix();
-		_ui->FIleSuffixLE->setText(suffix);
+		ui->FIleSuffixLE->setText(suffix);
 
-		_ui->ValueLE->setText(s);		
+		ui->ValueLE->setText(s);		
 
 	}
 	void EditorPathValue::UpdateUiToData()
 	{
-		_model->setDescribe(_ui->NameLE->text());
-		int type = _ui->TypeCB->currentIndex();
+		_model->setDescribe(ui->NameLE->text());
+		int type = ui->TypeCB->currentIndex();
 		_model->setType(DataProperty::PathType(type + 1));
 		if (type == 0)
 		{
 			//_model->setSuffix(ui->FIleSuffixLE->text());
-			_model->setPath(_ui->ValueLE->text());
+			_model->setPath(ui->ValueLE->text());
 		}
 		else if (type == 1)
 		{
-			_model->setSuffix(_ui->FIleSuffixLE->text());
-			_model->setFile(_ui->ValueLE->text());
+			_model->setSuffix(ui->FIleSuffixLE->text());
+			_model->setFile(ui->ValueLE->text());
 		}
 		else if (type == 2)
 		{
-			_model->setSuffix(_ui->FIleSuffixLE->text());
-			_model->setFileList(_ui->ValueLE->text().split(";"));
+			_model->setSuffix(ui->FIleSuffixLE->text());
+			_model->setFileList(ui->ValueLE->text().split(";"));
 		}
 		
 	}
@@ -134,7 +134,7 @@ namespace FastCAEDesigner{
 	
 	int EditorPathValue::IsNameSure()
 	{
-		QString name = _ui->NameLE->text().trimmed();
+		QString name = ui->NameLE->text().trimmed();
 
 		if (_usedNameList.contains(name))
 			return TheNameInUse;
@@ -149,7 +149,7 @@ namespace FastCAEDesigner{
 	}
 	int EditorPathValue::IsFileSuffixSure()
 	{
-		QString suffix = _ui->FIleSuffixLE->text().trimmed();
+		QString suffix = ui->FIleSuffixLE->text().trimmed();
 
 		if (suffix.isEmpty())
 			return FileSuffixIsEmpty;
@@ -175,22 +175,16 @@ namespace FastCAEDesigner{
 
 		return 0;
 	}
-
-	void EditorPathValue::setFileSuffixEnable(bool enable)
-	{
-		_ui->FIleSuffixLE->setEnabled(enable);
-	}
-
 	void EditorPathValue::OnOkPBtnClicked()
 	{
-		int type = _ui->TypeCB->currentIndex();
+		int type = ui->TypeCB->currentIndex();
 		int nameError = IsNameSure();
 		
 		if (nameError != 0)
 		{
 			QString errorMsg = _errorList[nameError];
-			_ui->ErrorText->setText(errorMsg);
-			_ui->ErrorText->show();
+			ui->ErrorText->setText(errorMsg);
+			ui->ErrorText->show();
 			QTimer::singleShot(3000, this, SLOT(OnTimeout()));
 			return;
 		}
@@ -202,8 +196,8 @@ namespace FastCAEDesigner{
 			if (suffixError != 0)
 			{
 				QString errorMsg = _errorList[suffixError];
-				_ui->ErrorText->setText(errorMsg);
-				_ui->ErrorText->show();
+				ui->ErrorText->setText(errorMsg);
+				ui->ErrorText->show();
 				QTimer::singleShot(3000, this, SLOT(OnTimeout()));
 				return;
 			}
@@ -215,15 +209,15 @@ namespace FastCAEDesigner{
 	}
 	void EditorPathValue::OnPathPBtnClicked()
 	{
-		if ((_ui->TypeCB->currentIndex() == 1) || (_ui->TypeCB->currentIndex() == 2))
+		if ((ui->TypeCB->currentIndex() == 1) || (ui->TypeCB->currentIndex() == 2))
 		{
 			int suffixError = IsFileSuffixSure();
 
 			if (suffixError != 0)
 			{
 				QString errorMsg = _errorList[suffixError];
-				_ui->ErrorText->setText(errorMsg);
-				_ui->ErrorText->show();
+				ui->ErrorText->setText(errorMsg);
+				ui->ErrorText->show();
 				QTimer::singleShot(3000, this, SLOT(OnTimeout()));
 				return;
 			}
@@ -235,16 +229,16 @@ namespace FastCAEDesigner{
 		selectFile->setWindowTitle(tr("Select File"));
 		selectFile->setDirectory(QCoreApplication::applicationDirPath());
 
-		if (_ui->FIleSuffixLE->text() != "")
-			suffixName = _ui->FIleSuffixLE->text();
+		if (ui->FIleSuffixLE->text() != "")
+			suffixName = ui->FIleSuffixLE->text();
 
 		selectFile->setNameFilter(suffixName);
 
-		if (_ui->TypeCB->currentIndex() == 0)
+		if (ui->TypeCB->currentIndex() == 0)
 			selectFile->setFileMode(QFileDialog::Directory);
-		else if (_ui->TypeCB->currentIndex() == 1)
+		else if (ui->TypeCB->currentIndex() == 1)
 			selectFile->setFileMode(QFileDialog::ExistingFile);
-		else if (_ui->TypeCB->currentIndex() == 2)
+		else if (ui->TypeCB->currentIndex() == 2)
 			selectFile->setFileMode(QFileDialog::ExistingFiles);
 		
 		selectFile->setViewMode(QFileDialog::Detail);
@@ -253,13 +247,13 @@ namespace FastCAEDesigner{
 		if (selectFile->exec())
 		{
 			fileNames = selectFile->selectedFiles();
-			_ui->ValueLE->setText(fileNames.join(";"));
+			ui->ValueLE->setText(fileNames.join(";"));
 		}
 
 	}
 	void EditorPathValue::OnTimeout()
 	{
-		_ui->ErrorText->setText("");
-		_ui->ErrorText->hide();
+		ui->ErrorText->setText("");
+		ui->ErrorText->hide();
 	}
 }

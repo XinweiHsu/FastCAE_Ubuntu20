@@ -1529,7 +1529,7 @@
    </property>
    <property name="icon">
     <iconset resource="../qrc/qianfan.qrc">
-     <normaloff>:/QUI/icon/meshFluid.png</normaloff>:/QUI/icon/meshFluid.png</iconset>
+     <normaloff>:/QUI/icon/solidMesh.png</normaloff>:/QUI/icon/solidMesh.png</iconset>
    </property>
    <property name="text">
     <string>FluidMesh</string>

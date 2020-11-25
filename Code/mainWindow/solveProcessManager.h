@@ -23,7 +23,6 @@ namespace  GUI
 
 	private slots:
 	   void solveFinished(int id);
-	   void removeSolve(int id);
 
 	private:
 		QHash<int, SolverControl::SolverControlBase*> _solvingProcess{};

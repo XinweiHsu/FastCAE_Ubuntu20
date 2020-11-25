@@ -42,7 +42,6 @@ HEADERS += \
 	$$PWD/GeoCommandGeoSplitter.h \
 	$$PWD/GeoCommandMakeFillHole.h \
 	$$PWD/GeoCommandMakeRemoveSurface.h \
-	$$PWD/GeoCommandFillGap.h \
 
 SOURCES += \
     $$PWD/GeoCommandList.cpp \
@@ -87,6 +86,5 @@ SOURCES += \
 	$$PWD/GeoCommandGeoSplitter.cpp \
 	$$PWD/GeoCommandMakeFillHole.cpp \
 	$$PWD/GeoCommandMakeRemoveSurface.cpp \
-	$$PWD/GeoCommandFillGap.cpp \
 	
 FORMS +=  \

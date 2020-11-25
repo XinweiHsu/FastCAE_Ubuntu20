@@ -20,15 +20,15 @@ namespace Command
 
 	bool CommandMakeRemoveSurface::execute()
 	{
-		
+
 		QList<Geometry::GeometrySet*> setList = _shapeHash.uniqueKeys();
 		bool success = false;
-		
+
 		for (int i = 0; i < setList.size(); ++i)
 		{
 			Geometry::GeometrySet* set = setList.at(i);
 			TopoDS_Shape* parent = set->getShape();
-		
+
 			QList<int> shapes = _shapeHash.values(set);
 			const int count = shapes.size();
 			if (count < 1) continue;

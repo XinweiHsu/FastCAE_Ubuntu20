@@ -5,7 +5,7 @@
 #include "meshData/meshSet.h"
 #include "BCBase/BCUserDef.h"
 #include "ModelData/modelDataSingleton.h"
-#include "ModelData/ModelDataBaseExtend.h"
+#include "ModelData/modelDataBaseExtend.h"
 #include "DataProperty/ParameterGroup.h"
 #include "DataProperty/ParameterDouble.h"
 #include "Material/Material.h"
@@ -16,7 +16,7 @@
 #include <vtkUnstructuredGrid.h>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <qDebug>
+#include <QDebug>
 #include <omp.h>
 
 namespace MeshData

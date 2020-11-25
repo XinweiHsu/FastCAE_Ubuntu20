@@ -69,7 +69,6 @@ namespace Command
 		static void MakeGeoSplitter(QMultiHash<Geometry::GeometrySet*, int> bodyhash, int typeindex, int faceindex, Geometry::GeometrySet* facebody, int planeindex, double * random, double* base);
 		static void EditGeoSplitter(Geometry::GeometrySet* editset, QMultiHash<Geometry::GeometrySet*, int> bodyhash, int typeindex, int faceindex, Geometry::GeometrySet* facebody, int planeindex, double * random, double* base);
 		static void MakeFillHole(QMultiHash<Geometry::GeometrySet*, int> faces,  int editID);
-		static void MakeRemoveSurface(QMultiHash<Geometry::GeometrySet*, int> faces, int editID);
 
     private:
         static void warning();
@@ -129,6 +128,5 @@ extern "C"
 	void GEOMETRYCOMMANDAPI MakeGeoSplitter(char* bodystr, char* method, int facebody, int faceid, char* planemethod, double random0, double random1, double random2, double base0, double base1, double base2);
 	void GEOMETRYCOMMANDAPI EditGeoSplitter(int editid, char* bodystr, char* method, int facebody, int faceid, char* planemethod, double random0, double random1, double random2, double base0, double base1, double base2);
 	void GEOMETRYCOMMANDAPI MakeFillHole(char* faces, int editID);
-	void GEOMETRYCOMMANDAPI MakeRemoveSurface(char* faces, int editID);
 }
 #endif

@@ -10,7 +10,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QString>
-#include <QtWebView/qtwebview>
+#include <QtWebView/QtWebView>
 #include <QWebEngineView>
 
 namespace GUI

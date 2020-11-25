@@ -131,7 +131,7 @@ namespace GUI
 		void GeoSplitter();
 		void MakeFillHole();
 		void MakeRemoveSurface();
-		void MakeFillGap();
+
 	private:
 		void handleSingleClickEvent(QTreeWidgetItem*item, int proID);
 		void openPreWinPy();

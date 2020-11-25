@@ -56,7 +56,6 @@ namespace SolverControl
 		void sendMessage(QString mess);
 		void processFinish(int pid);
 		void openRealTime(Post::RealTimeWindowBase* w, int proID);
-		void removeSolver(int pid);
 
 	protected slots:
 		virtual void readSolverOutput();

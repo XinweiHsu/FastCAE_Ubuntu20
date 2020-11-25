@@ -2,7 +2,7 @@
 #define _GEOCOMPONENT_H_
 
 #include "geometryAPI.h"
-#include "Dataproperty/ComponentBase.h"
+#include "DataProperty/ComponentBase.h"
 #include <qhash.h>
 
 class vtkPolyData;

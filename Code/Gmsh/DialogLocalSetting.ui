@@ -232,7 +232,7 @@
         <item>
          <widget class="QCheckBox" name="backgroundField">
           <property name="text">
-           <string>Background Field</string>
+           <string>Backgroun Field</string>
           </property>
          </widget>
         </item>

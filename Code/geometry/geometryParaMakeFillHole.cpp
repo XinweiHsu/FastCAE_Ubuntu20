@@ -1,5 +1,5 @@
 
-#include "GeometryParaMakeFillHole.h"
+#include "geometryParaMakeFillHole.h"
 #include "geometrySet.h"
 #include "geometryData.h"
 #include <QDomElement>

@@ -24,7 +24,7 @@ namespace ModuleBase
 		
 		connect(this, SIGNAL(closeProcess(QWidget*)), _mainWindow, SIGNAL(stopSolve(QWidget*)));
 		connect(_task, &ThreadTask::showInformation, this, &ProcessBar::setInformation);
-		connect(_task, &ThreadTask::setProgressStatus, this, &ProcessBar::setProcess);
+		connect(_task, &ThreadTask::setFinishedStatus, this, &ProcessBar::setProcess);
 		connect(_task, &ThreadTask::setRange, this, &ProcessBar::setProcessRange);
 		connect(_ui->autoCloseQCB, SIGNAL(clicked()), this, SLOT(onAutoCloseQCBClicked()));
 		connect(_task, &ThreadTask::showButton, this, &ProcessBar::buttonVisible);

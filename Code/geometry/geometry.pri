@@ -29,7 +29,6 @@ HEADERS += \
 	$$PWD/geometryParaGeoSplitter.h \
 	$$PWD/geometryParaMakeFillHole.h \
 	$$PWD/geometryParaMakeRemoveSurface.h \
-	$$PWD/geometryParaMakeFillGap.h \
 	
 	
 SOURCES += \
@@ -63,4 +62,3 @@ SOURCES += \
 	$$PWD/geometryParaVariableFillet.cpp \
 	$$PWD/geometryParaMakeFillHole.cpp \
 	$$PWD/geometryParaMakeRemoveSurface.cpp \
-	$$PWD/geometryParaMakeFillGap.cpp \

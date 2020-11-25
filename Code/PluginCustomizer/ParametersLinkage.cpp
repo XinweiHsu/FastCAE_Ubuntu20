@@ -1004,7 +1004,6 @@ namespace FastCAEDesigner{
 			else if (_allParameterList.at(index)->getParaType() == DataProperty::Para_Path)
 			{
 				EditorPathValue dlg(((DataProperty::ParameterPath*)_allParameterList.at(index)));
-				dlg.setFileSuffixEnable(false);
 				dlg.exec();
 			}
 			
@@ -1019,7 +1018,6 @@ namespace FastCAEDesigner{
 			else if (_remainParameterList.at(index)->getParaType() == DataProperty::Para_Path)
 			{
 				EditorPathValue dlg(((DataProperty::ParameterPath*)_remainParameterList.at(index)));
-				dlg.setFileSuffixEnable(false);
 				dlg.exec();
 			}
 		}

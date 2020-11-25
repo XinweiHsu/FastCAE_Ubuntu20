@@ -319,14 +319,8 @@ namespace Gmsh
 
 		_pyAgent->submit(QString("gmsher.setDim(3)"));
 
-		for(QMultiHash<Geometry::GeometrySet*, int>::iterator iter = _solidHash.begin(); iter != _solidHash.end(); ++iter)
-		{
-			auto set = iter.key();
-			int id = set->getID();
-			int index = iter.value();
-			QString code = QString("gmsher.appendSolid(%1,%2)").arg(id).arg(index);
-			_pyAgent->submit(code);
-		}
+		for(QMultiHash<Geometry::GeometrySet*, int>::iterator iter = _solidHash.begin(); iter != _solidHash.end(); ++iter)		{			auto set = iter.key();			int id = set->getID();			int index = iter.value();			QString code = QString("gmsher.appendSolid(%1,%2)").arg(id).arg(index);
+			_pyAgent->submit(code);		}
 		if (_ui->selectall->isChecked())
 			_pyAgent->submit(QString("gmsher.selectedAll()"));
 		if (_ui->selectvisible->isChecked())

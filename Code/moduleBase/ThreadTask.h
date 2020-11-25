@@ -24,10 +24,12 @@ namespace ModuleBase{
 		~ThreadTask();	
 
 	signals:
+		void start();
 		void showProcessBar(QWidget*);
-		void setProgressStatus(int finished);
-		void setRange(int min, int max);
-		void showButton(bool visible);
+		void closeThread();
+		void setFinishedStatus(int);
+		void setRange(int, int);
+		void showButton(bool);
 		void showInformation(QString s);
 		//void taskFinished(ThreadTask* t);
 		void updateMesh();
@@ -40,12 +42,15 @@ namespace ModuleBase{
 		void stop();
 
 	protected:
+		///virtual void run() = 0;
 		void threadTaskFinished();
 
 	protected:
 		ProcessBar* _process;
 		GUI::MainWindow* _mainwindow;
 		bool _threadRuning{ false };
+		//QThread _thread;
+		//QThread* _thread;
 	};
 }
 #endif // THREADTASK_H

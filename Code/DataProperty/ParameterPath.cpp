@@ -160,7 +160,6 @@ namespace DataProperty
 			setFileList(p->getFileList()); break;
 		default: break;
 		}
-		setSuffix(p->getSuffix());
 		if (valueOnly) return;
 		_type = type;
 	}

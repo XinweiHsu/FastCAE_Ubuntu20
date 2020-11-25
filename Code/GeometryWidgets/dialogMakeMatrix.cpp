@@ -8,6 +8,8 @@
 #include "geometry/geometrySet.h"
 #include "geometry/geometryParaMakeMatrix.h"
 #include "python/PyAgent.h"
+#include "math.h"
+
 namespace GeometryWidget
 {
 	MakeMatrixDialog::MakeMatrixDialog(GUI::MainWindow* m, MainWidget::PreWindow* p) :

@@ -4,6 +4,7 @@
 #include <QDomDocument>
 #include <QDomNodeList>
 #include <assert.h>
+#include "math.h"
 
 namespace DataProperty
 {
@@ -39,32 +40,19 @@ namespace DataProperty
 	{
 		_data.resize(_rowCount);
 		for (int i = 0; i < _rowCount; ++i)
+		{
 			_data[i].resize(_columnCount);
-
-		_stringData.resize(_rowCount);
-		for (int i = 0; i < _rowCount; ++i)
-			_stringData[i].resize(_columnCount);
+		}
 	}
 
-	QStringList ParameterTable::getRow(int index)
+	QList<double> ParameterTable::getRow(int index)
 	{
-		QStringList row;
+		QList<double> row;
 		if (index < _rowCount)
 		{
-			if (_dataType == DoubleNumber)
-			{
-				std::vector<double> r = _data.at(index);
-				for (int i = 0; i < r.size(); ++i)
-					row.append(QString::number(r.at(i)));
-			}
-			else if (_dataType == String)
-			{
-				std::vector<QString> r = _stringData.at(index);
-				for (int i = 0; i < r.size(); ++i)
-					row.append(r.at(i));
-			}
-				
-			
+			std::vector<double> r = _data.at(index);
+			for (int i = 0; i < r.size(); ++i)
+				row.append(r.at(i));
 		}
 		return row;
 	}
@@ -98,29 +86,11 @@ namespace DataProperty
 
 	}
 
-	void ParameterTable::setValue(int row, int col, QString v)
+	double ParameterTable::getValue(int row, int col)
 	{
+		double v = 0.0;
 		if (row < _rowCount && col < _columnCount)
-		{
-			QString  c = _stringData[row][col];
-			if (c!= v)
-			{
-				_stringData[row][col] = v;
-				emit dataChanged();
-			}
-		}
-	}
-
-	QString ParameterTable::getValue(int row, int col)
-	{
-		QString v;
-		if (row < _rowCount && col < _columnCount)
-		{
-			if (_dataType == DoubleNumber)
-				v = QString::number(_data[row][col]);
-			else if (_dataType == String)
-				v = _stringData[row][col];
-		}
+			v = _data[row][col];
 		return v;
 	}
 
@@ -136,15 +106,6 @@ namespace DataProperty
 	void ParameterTable::writeParameter(QDomDocument* doc, QDomElement* parent)
 	{
 		ParameterBase::writeParameter(doc, parent);
-
-		QString stype = "DoubleNumber";
-		if (_dataType == String)
-			stype = "String";
-		QDomElement stypeele = doc->createElement("DataType");
-		QDomText tyText = doc->createTextNode(stype);
-		stypeele.appendChild(tyText);
-		parent->appendChild(stypeele);
-
 		QString stitle;
 		for (int i = 0; i < _title.size(); ++i)
 		{
@@ -165,9 +126,14 @@ namespace DataProperty
 
 		for (int i = 0; i < _rowCount; ++i)
 		{
-			QStringList data = this->getRow(i);
-			QString sdata = data.join(",");
-			
+			QList<double> data = this->getRow(i);
+			QString sdata;
+			for (int i = 0; i < data.size(); ++i)
+			{
+				sdata.append(QString::number(data.at(i)));
+				sdata.append(",");
+			}
+			sdata.resize(sdata.size() - 1);
 			QDomElement dataele = doc->createElement("Data");
 			QDomText domtext = doc->createTextNode(sdata);
 			dataele.appendChild(domtext);
@@ -178,15 +144,6 @@ namespace DataProperty
 	void ParameterTable::readParameter(QDomElement* e)
 	{
 		ParameterBase::readParameter(e);
-		
-		QDomNodeList typeList = e->elementsByTagName("DataType");
-		if (typeList.size() == 1)
-		{
-			QString s = typeList.at(0).toElement().text();
-			if (s == "String")
-				_dataType = String;
-		}
-
 		QDomNodeList titleList = e->elementsByTagName("Title");
 		if (titleList.size() == 1)
 		{
@@ -211,22 +168,14 @@ namespace DataProperty
 			QStringList datalist = s.split(",");
 			for (int j = 0; j < datalist.size(); ++j)
 			{
-				QString sd = datalist.at(j);
-				if (_dataType == String)
-					this->setValue(i, j, sd);
-				else if (_dataType == DoubleNumber)
-					this->setValue(i, j, sd.toDouble());
+				double d = datalist.at(j).toDouble();
+				setValue(i, j, d);
 			}
 		}
 	}
 	std::vector<std::vector<double>> ParameterTable::getData()
 	{
 		return _data;
-	}
-
-	std::vector<std::vector<QString>> ParameterTable::getStringData()
-	{
-		return _stringData;
 	}
 
 	void ParameterTable::copy(ParameterBase* ori, bool valueOnly)
@@ -237,22 +186,10 @@ namespace DataProperty
 		_rowCount = p->getRowCount();
 		_columnCount = p->getColumnCount();
 		_title = p->getTitle();
-		_dataType = p->getTableDataType();
 
 		this->resizeData();
 
 		_data = p->getData();
-		_stringData = p->getStringData();
-	}
-
-	void ParameterTable::setDataType(TableDataType t)
-	{
-		_dataType = t;
-	}
-
-	DataProperty::TableDataType ParameterTable::getTableDataType()
-	{
-		return _dataType;
 	}
 
 	void ParameterTable::setData(std::vector<std::vector<double>> data)
@@ -289,11 +226,8 @@ namespace DataProperty
 			const int cn = rowtext.size();
 			for (int j = 0; j < cn; ++j)
 			{
-				QString sd = rowtext.at(j);
-				if(_dataType ==  String)
-					this->setValue(i, j, sd);
-				else if(_dataType == DoubleNumber)
-					this->setValue(i, j, sd.toDouble());
+				double d = rowtext.at(j).toDouble();
+				this->setValue(i, j, d);
 			}
 
 		}

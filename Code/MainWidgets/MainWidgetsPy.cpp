@@ -61,7 +61,7 @@ namespace MainWidget
 			s->appendModel(m);
 
 			emit _physicsWidget->updatePhysicsTreePySig();
-			emit _controlPanel->updateActionStates();
+			//emit _controlPanel->updateActionStates();
 		}
 		_pyAgent->unLock();
 	}

@@ -74,7 +74,7 @@ namespace MeshData
 
 	vtkDataSet* VTKdataExchange::readVTK()
 	{
-		if (!_threadRuning) return false;
+		if (!_threadRuning) return nullptr;
 		QTextCodec *codec = QTextCodec::codecForName("GB18030");
 		QByteArray ba = codec->fromUnicode(_fileName);
 		_vtkReader = vtkSmartPointer<vtkDataSetReader>::New();
@@ -86,7 +86,7 @@ namespace MeshData
 
 	vtkDataSet* VTKdataExchange::readSTL()
 	{
-		if (!_threadRuning) return false;
+		if (!_threadRuning) return nullptr;
 		QTextCodec *codec = QTextCodec::codecForName("GB18030");
 		QByteArray ba = codec->fromUnicode(_fileName);
 		_stlReader = vtkSmartPointer<vtkSTLReader>::New();
@@ -98,7 +98,7 @@ namespace MeshData
 
 	vtkDataSet* VTKdataExchange::readTecplot()
 	{
-		if (!_threadRuning) return false;
+		if (!_threadRuning) return nullptr;
 		QTextCodec *codec = QTextCodec::codecForName("GB18030");
 		QByteArray ba = codec->fromUnicode(_fileName);
 		_tecplotReader = vtkSmartPointer<vtkTecplotReader>::New();

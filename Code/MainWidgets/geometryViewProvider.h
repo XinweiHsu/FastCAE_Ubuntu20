@@ -6,7 +6,7 @@
 #include <QHash>
 #include <QList>
 #include "moduleBase/ModuleType.h"
-#include <vtkPolydata.h>
+#include <vtkPolyData.h>
 #include <TopoDS.hxx>
 
 class TopoDS_Shape;

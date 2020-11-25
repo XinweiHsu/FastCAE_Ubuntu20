@@ -66,10 +66,8 @@
 #include "GeometryWidgets/dialogGeoSplitter.h"
 #include "GeometryWidgets/dialogMakeFillHole.h"
 #include "GeometryWidgets/dialogMakeRemoveSurface.h"
-#include "GeometryWidgets/dialogMakeFillGap.h"
 #include "Gmsh/GmshModule.h"
 #include "UserGuidence/DialogUserGuidence.h"
-#include "moduleBase/ThreadControl.h"
 
 namespace GUI
 {
@@ -145,7 +143,6 @@ namespace GUI
 
 		connect(mainwindow->getUi()->actionFillHole, SIGNAL(triggered()), this, SLOT(MakeFillHole()));
 		connect(mainwindow->getUi()->actionRemoveSurface, SIGNAL(triggered()), this, SLOT(MakeRemoveSurface()));
-		connect(mainwindow->getUi()->actionFillGap, SIGNAL(triggered()), this, SLOT(MakeFillGap()));
 		//connect(mainwindow->getUi()->actionDemo, SIGNAL(triggered()), this, SLOT(showDemo()));
 
 		_solveProcessManager = new SolveProcessManager;
@@ -169,10 +166,8 @@ namespace GUI
 		if (!f.exists()) return false;
 
 		this->clearData(false);
-		
 		IO::ProjectFileIO* reader = new IO::ProjectFileIO(_mainWindow,this ,fileName, true);
-		ModuleBase::ThreadControl* tc = new ModuleBase::ThreadControl(reader);
-		emit tc->threadStart();
+		emit reader->start();
 	}
 
 	void SignalHandler::projectFileProcessed(QString fileName, bool success ,bool read)
@@ -234,8 +229,7 @@ namespace GUI
 	{
 		//add a writer
 		IO::ProjectFileIO* writer = new IO::ProjectFileIO( _mainWindow, this,filename, false);
-		ModuleBase::ThreadControl* tc = new ModuleBase::ThreadControl(writer);
-		emit tc->threadStart();
+		emit writer->start();
 	}
 
 	void SignalHandler::on_actionSolve()
@@ -1077,18 +1071,7 @@ namespace GUI
 		GeometryWidget::MakeRemoveSurfaceDialog* dlg = new GeometryWidget::MakeRemoveSurfaceDialog(_mainWindow, p);
 		this->showDialog(dlg);
 	}
-	void SignalHandler::MakeFillGap()
-	{
-		SubWindowManager* sw = _mainWindow->getSubWindowManager();
-		if (!sw->isPreWindowOpened())
-		{
-			QMessageBox::warning(_mainWindow, tr("Warning"), tr("Open PreWindow First!"));
-			return;
-		}
-		MainWidget::PreWindow *p = sw->getPreWindow();
-		GeometryWidget::MakeFillGapDialog* dlg = new GeometryWidget::MakeFillGapDialog(_mainWindow, p);
-		this->showDialog(dlg);
-	}
+
 	void SignalHandler::openPreWinPy()
 	{
 		QString pycode = QString("MainWindow.openPreWindow()");

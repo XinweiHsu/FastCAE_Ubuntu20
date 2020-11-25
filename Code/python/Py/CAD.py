@@ -1103,34 +1103,7 @@ class FillHole:
 
     def edit(self):
         self.create()				
-class RemoveSurface:
-    def __init__(self):
-        self.faces=dict()
-        self.editID = -1
-
-    def appendFace(self, geoset, index):
-        self.faces.setdefault(geoset, set()).add(index)
-
-    def setEditID(self,id):
-        self.editID = id
-
-    def create(self):
-         keyList = self.faces.keys()
-         strcom = ""
-         for key in keyList:
-             setstr = ""
-             values = self.faces.get(key)
-             for v in values:
-                 setstr = setstr + str(v) + ","
-             setstr =  str(key) +  ":" + setstr[:-1]
-             strcom = strcom + setstr+";"
-         strcom = strcom[:-1]
-         facestr = bytes(strcom, encoding='utf-8')
-         command.MakeRemoveSurface(facestr, c_int(self.editID))
-
-    def edit(self):
-        self.create()				
-				
+		
 		
 		
 		

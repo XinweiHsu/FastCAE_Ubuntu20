@@ -29,7 +29,6 @@ HEADERS += \
 	$$PWD/dialogGeoSplitter.h \
 	$$PWD/dialogMakeFillHole.h \
 	$$PWD/dialogMakeRemoveSurface.h \
-	$$PWD/dialogMakeFillGap.h \
 
 	
 SOURCES += \
@@ -62,7 +61,6 @@ SOURCES += \
 	$$PWD/dialogGeoSplitter.cpp \
 	$$PWD/dialogMakeFillHole.cpp \
 	$$PWD/dialogMakeRemoveSurface.cpp \
-	$$PWD/dialogMakeFillGap.cpp \
 	
 FORMS +=  \
 	$$PWD/geoPointWidget.ui \
@@ -92,4 +90,3 @@ FORMS +=  \
 	$$PWD/dialogGeoSplitter.ui \
 	$$PWD/dialogMakeFillHole.ui \
 	$$PWD/dialogMakeRemoveSurface.ui \
-	$$PWD/dialogMakeFillGap.ui \

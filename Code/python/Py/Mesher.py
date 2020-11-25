@@ -87,16 +87,16 @@ class Gmsher:
     pointsList = [px,py,pz,pv]
     self.pointsSizeList.append(pointsList)
     
-  def appendBoxFields(self,tp,thick,vin,vout,x,y,z,length,width,height,bg):
-    boxlist = [tp,thick,vin,vout,x,y,z,length,width,height,bg]
+  def appendBoxFields(self,tp,v1,v2,v3,v4,v5,v6,v7,v8,v9,bg):
+    boxlist = [tp,v1,v2,v3,v4,v5,v6,v7,v8,v9,bg]
     self.fieldsList.append(boxlist)
     
-  def appendBallFields(self,tp,radius,thick,vin,vout,x,y,z,bg):
-    balllist = [tp,radius,thick,vin,vout,x,y,z,bg]
+  def appendBallFields(self,tp,v1,v2,v3,v4,v5,v6,v7,bg):
+    balllist = [tp,v1,v2,v3,v4,v5,v6,v7,bg]
     self.fieldsList.append(balllist)
     
-  def appendCylinderFields(self,tp,radius,length,x,y,z,xaxis,yaxis,zaxis,vin,vout,bg):
-    cylinderlist = [tp,radius,length,x,y,z,xaxis,yaxis,zaxis,vin,vout,bg]
+  def appendCylinderFields(self,tp,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,bg):
+    cylinderlist = [tp,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,bg]
     self.fieldsList.append(cylinderlist)
     
   def appendSolidsFields(self,tp,vi,vo,tn,setid,index,bg):

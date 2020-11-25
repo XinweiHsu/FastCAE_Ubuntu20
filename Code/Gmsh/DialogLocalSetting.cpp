@@ -21,7 +21,7 @@ namespace Gmsh
 		_pointWidget = new GeometryWidget::GeoPointWidget(m, p);
 		_ui->pointLayout->addWidget(_pointWidget);
 		_tab->horizontalHeader()->setStretchLastSection(true);
-		_ui->comboBox->setMaxCount(5);
+		//_ui->comboBox->setMaxCount(4);
 		
 		updatePointsInterface();
 
@@ -209,7 +209,7 @@ namespace Gmsh
 		_ui->label_3->setText("Height:");
 		_ui->label_4->setText("VIn:");
 		_ui->label_5->setText("VOut:");
-		_ui->label_6->setText("Thickness:");
+		_ui->label_6->setText("Thinckness:");
 		_ui->backgroundField->setVisible(true);
 		
 		clearInterfaceData();
@@ -244,7 +244,7 @@ namespace Gmsh
 		_ui->label->setText("Radius:");
 		_ui->label_2->setText("VIn:");
 		_ui->label_3->setText("VOut:");
-		_ui->label_4->setText("Thickness:");
+		_ui->label_4->setText("Thinckness:");
 		_ui->backgroundField->setVisible(true);
 		
 		clearInterfaceData();
@@ -424,14 +424,12 @@ namespace Gmsh
 		_pointWidget->setVisible(false);
 		_ui->label->setText(tr("VIn:"));
 		_ui->label_2->setText(tr("VOut:"));
-		//_ui->label_3->setText(tr("Thickness:"));
+		_ui->label_3->setText(tr("Thinckness:"));
 		_ui->backgroundField->setVisible(true);
 		_solidHash.clear();
 
 		clearInterfaceData();
-		updateValueInterface(2);
-		cylinderSelectVisiable();
-		cylinderAxisVisiable();
+		updateValueInterface(3);
 
 		if (_currentLocal != nullptr)
 		{
@@ -440,18 +438,10 @@ namespace Gmsh
 				return;
 			_ui->doubleSpinBox->setValue(b->_vIn);
 			_ui->doubleSpinBox_2->setValue(b->_vOut);
-			//_ui->doubleSpinBox_3->setValue(b->_thickness);
+			_ui->doubleSpinBox_3->setValue(b->_thickness);
 			_ui->backgroundField->setChecked(b->_backgroundField);
 
-			for (QMultiHash<int, int>::iterator iter = b->_solidHash.begin(); iter != b->_solidHash.end(); ++iter)
-			{
-				auto id = iter.key();
-				Geometry::GeometrySet* set = Geometry::GeometryData::getInstance()->getGeometrySetByID(id);
-				if (set ==nullptr)continue;
-				int index = iter.value();
-				_solidHash.insert(set, index);
-				emit highLightGeometrySolidSig(set, index, true);
-			}
+			for (QMultiHash<int, int>::iterator iter = b->_solidHash.begin(); iter != b->_solidHash.end(); ++iter)			{				auto id = iter.key();				Geometry::GeometrySet* set = Geometry::GeometryData::getInstance()->getGeometrySetByID(id);				if (set ==nullptr)continue;				int index = iter.value();				_solidHash.insert(set, index);				emit highLightGeometrySolidSig(set, index, true);			}
 		}
 
 	}
@@ -658,18 +648,12 @@ namespace Gmsh
 	{
 		double vin = _ui->doubleSpinBox->value();
 		double vout = _ui->doubleSpinBox_2->value();
-	//	double thick = _ui->doubleSpinBox_3->value();
+		double thick = _ui->doubleSpinBox_3->value();
 
 		if (_solidHash.size() <= 0)return;
 
 		QMultiHash<int, int> solid;
-		for (QMultiHash<Geometry::GeometrySet*, int>::iterator iter = _solidHash.begin(); iter != _solidHash.end(); ++iter)
-		{
-			auto set = iter.key();
-			int id = set->getID();
-			int index = iter.value();
-			solid.insert(id, index);
-		}
+		for (QMultiHash<Geometry::GeometrySet*, int>::iterator iter = _solidHash.begin(); iter != _solidHash.end(); ++iter)		{			auto set = iter.key();			int id = set->getID();			int index = iter.value();			solid.insert(id, index);		}
 		if (_currentLocal == nullptr)
 		{
 			SolidFields* sf = new SolidFields;
@@ -677,7 +661,7 @@ namespace Gmsh
 			sf->_vIn = vin;
 			sf->_vOut = vout;
 			sf->_solidHash = solid;
-			//sf->_thickness = thick;
+			sf->_thickness = thick;
 			//sf->setIndex(_locals->size() + 1);
 			sf->_backgroundField = _ui->backgroundField->isChecked();
 			_locals->append(sf);
@@ -688,7 +672,7 @@ namespace Gmsh
 			sf->_vIn = vin;
 			sf->_vOut = vout;
 			sf->_solidHash = solid;
-			//sf->_thickness = thick;
+			sf->_thickness = thick;
 			//sf->setIndex(_locals->size() + 1);
 			sf->_backgroundField = _ui->backgroundField->isChecked();
 		}

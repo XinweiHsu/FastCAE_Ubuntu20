@@ -22,7 +22,7 @@
 #include "MainWidgets/projectSolveDialog.h"
 #include "MainWidgets/DialogCreateSet.h"
 #include "MainWidgets/DialogCreateGeoComponent.h"
-#include "MainWidgets/DialogVTkTransform.h"
+#include "MainWidgets/DialogVTKTransform.h"
 #include "MainWidgets/preWindow.h"
 #include "GeometryWidgets/dialogSketchPlane.h"
 #include "meshData/meshSingleton.h"
