@@ -58,7 +58,7 @@ win32{
 unix{
     INCLUDEPATH	+=   ./ \
 		             ../ \
-					 ../../quazip/include/ \
+					 ../../quazip/include/quazip/ \
   CONFIG          += plugin
   DESTDIR         = ../../output/bin
   MOC_DIR         = ./release/moc
