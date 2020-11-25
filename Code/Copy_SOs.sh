@@ -142,7 +142,7 @@ cp -a ../VTK/lib/libvtkRenderingOpenGL2-9.0.so.1             	../output/bin/
 cp -a ../VTK/lib/libvtkRenderingSceneGraph-9.0.so.1          	../output/bin/
 cp -a ../VTK/lib/libvtkRenderingVolumeOpenGL2-9.0.so.1       	../output/bin/
 cp -a ../VTK/lib/libvtkRenderingVolume-9.0.so.1              	../output/bin/
-cp -a ../VTK/lib/libvtkRenderingVtkJs-9.0.so.1               	../output/bin/
+cp -a ../VTK/lib/libvtkRenderingVtkJS-9.0.so.1               	../output/bin/
 cp -a ../VTK/lib/libvtksys-9.0.so.1                          	../output/bin/
 cp -a ../VTK/lib/libvtktiff-9.0.so.1                         	../output/bin/
 cp -a ../VTK/lib/libvtkverdict-9.0.so.1                      	../output/bin/
@@ -191,7 +191,7 @@ cp -a ../VTK/lib/libvtkInteractionWidgets-9.0.so.9.0.1            	../output/bin
 cp -a ../VTK/lib/libvtkIOCore-9.0.so.9.0.1                        	../output/bin/
 cp -a ../VTK/lib/libvtkIOExodus-9.0.so.9.0.1                      	../output/bin/
 cp -a ../VTK/lib/libvtkIOExport-9.0.so.9.0.1                      	../output/bin/
-cp -a ../VTK/lib/libvtkIOExportOpenGL2-9.0.so.9.0.1               	../output/bin/
+cp -a ../VTK/lib/libvtkIOExportOpenGL2-9.0.so.9.0.1               	../output/bin/0
 cp -a ../VTK/lib/libvtkIOGeometry-9.0.so.9.0.1                    	../output/bin/
 cp -a ../VTK/lib/libvtkIOImage-9.0.so.9.0.1                       	../output/bin/
 cp -a ../VTK/lib/libvtkIOImport-9.0.so.9.0.1                      	../output/bin/
@@ -219,7 +219,7 @@ cp -a ../VTK/lib/libvtkRenderingOpenGL2-9.0.so.9.0.1              	../output/bin
 cp -a ../VTK/lib/libvtkRenderingSceneGraph-9.0.so.9.0.1           	../output/bin/
 cp -a ../VTK/lib/libvtkRenderingVolumeOpenGL2-9.0.so.9.0.1        	../output/bin/
 cp -a ../VTK/lib/libvtkRenderingVolume-9.0.so.9.0.1               	../output/bin/
-cp -a ../VTK/lib/libvtkRenderingVtkJs-9.0.so.9.0.1                	../output/bin/
+cp -a ../VTK/lib/libvtkRenderingVtkJS-9.0.so.9.0.1                	../output/bin/
 cp -a ../VTK/lib/libvtksys-9.0.so.9.0.1                           	../output/bin/
 cp -a ../VTK/lib/libvtktiff-9.0.so.9.0.1                          	../output/bin/
 cp -a ../VTK/lib/libvtkverdict-9.0.so.9.0.1                       	../output/bin/
