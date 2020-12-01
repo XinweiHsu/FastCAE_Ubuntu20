@@ -37,6 +37,7 @@ cp -a ../OCC/lib/libTKIVtk.so.7            ../output/bin/
 cp -a ../OCC/lib/libTKMath.so.7            ../output/bin/
 cp -a ../OCC/lib/libTKMesh.so.7            ../output/bin/
 cp -a ../OCC/lib/libTKOffset.so.7          ../output/bin/
+cp -a ../OCC/lib/libTKPrim.so.7		   ../output/bin/
 cp -a ../OCC/lib/libTKService.so.7         ../output/bin/
 cp -a ../OCC/lib/libTKShHealing.so.7       ../output/bin/
 cp -a ../OCC/lib/libTKSTEP209.so.7         ../output/bin/
@@ -62,6 +63,7 @@ cp -a ../OCC/lib/libTKIVtk.so.7.5.0            ../output/bin/
 cp -a ../OCC/lib/libTKMath.so.7.5.0            ../output/bin/
 cp -a ../OCC/lib/libTKMesh.so.7.5.0            ../output/bin/
 cp -a ../OCC/lib/libTKOffset.so.7.5.0          ../output/bin/
+cp -a ../OCC/lib/libTKPrim.so.7.5.0		../output/bin/
 cp -a ../OCC/lib/libTKService.so.7.5.0         ../output/bin/
 cp -a ../OCC/lib/libTKShHealing.so.7.5.0       ../output/bin/
 cp -a ../OCC/lib/libTKSTEP209.so.7.5.0         ../output/bin/
@@ -114,7 +116,7 @@ cp -a ../VTK/lib/libvtkInteractionWidgets-9.0.so.1           	../output/bin/
 cp -a ../VTK/lib/libvtkIOCore-9.0.so.1                       	../output/bin/
 cp -a ../VTK/lib/libvtkIOExodus-9.0.so.1                     	../output/bin/
 cp -a ../VTK/lib/libvtkIOExport-9.0.so.1                     	../output/bin/
-cp -a ../VTK/lib/libvtkIOExportOpenGL2-9.0.so.1              	../output/bin/
+cp -a ../VTK/lib/libvtkIOExportGL2PS-9.0.so.1              	../output/bin/
 cp -a ../VTK/lib/libvtkIOGeometry-9.0.so.1                   	../output/bin/
 cp -a ../VTK/lib/libvtkIOImage-9.0.so.1                      	../output/bin/
 cp -a ../VTK/lib/libvtkIOImport-9.0.so.1                     	../output/bin/
@@ -191,7 +193,7 @@ cp -a ../VTK/lib/libvtkInteractionWidgets-9.0.so.9.0.1            	../output/bin
 cp -a ../VTK/lib/libvtkIOCore-9.0.so.9.0.1                        	../output/bin/
 cp -a ../VTK/lib/libvtkIOExodus-9.0.so.9.0.1                      	../output/bin/
 cp -a ../VTK/lib/libvtkIOExport-9.0.so.9.0.1                      	../output/bin/
-cp -a ../VTK/lib/libvtkIOExportOpenGL2-9.0.so.9.0.1               	../output/bin/0
+cp -a ../VTK/lib/libvtkIOExportGL2PS-9.0.so.9.0.1               	../output/bin/
 cp -a ../VTK/lib/libvtkIOGeometry-9.0.so.9.0.1                    	../output/bin/
 cp -a ../VTK/lib/libvtkIOImage-9.0.so.9.0.1                       	../output/bin/
 cp -a ../VTK/lib/libvtkIOImport-9.0.so.9.0.1                      	../output/bin/
