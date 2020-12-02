@@ -5,26 +5,36 @@
     <name>LoadMaterialDialog</name>
     <message>
         <location filename="../../Material/DialogLoadMaterial.ui" line="+14"/>
+        <location filename="../../Material/debug/qui/ui_DialogLoadMaterial.h" line="+122"/>
+        <location filename="../../Material/release/qui/ui_DialogLoadMaterial.h" line="+122"/>
         <source>Load Material</source>
         <translation>导入材料</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../Material/debug/qui/ui_DialogLoadMaterial.h" line="+1"/>
+        <location filename="../../Material/release/qui/ui_DialogLoadMaterial.h" line="+1"/>
         <source>Available:</source>
         <translation>可选：</translation>
     </message>
     <message>
         <location line="+14"/>
+        <location filename="../../Material/debug/qui/ui_DialogLoadMaterial.h" line="+1"/>
+        <location filename="../../Material/release/qui/ui_DialogLoadMaterial.h" line="+1"/>
         <source>&gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../Material/debug/qui/ui_DialogLoadMaterial.h" line="+1"/>
+        <location filename="../../Material/release/qui/ui_DialogLoadMaterial.h" line="+1"/>
         <source>&lt;&lt;</source>
         <translation></translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../Material/debug/qui/ui_DialogLoadMaterial.h" line="+1"/>
+        <location filename="../../Material/release/qui/ui_DialogLoadMaterial.h" line="+1"/>
         <source>Selected:</source>
         <translation>已选：</translation>
     </message>
@@ -66,21 +76,31 @@
     <message>
         <location filename="../../Material/DialogRemoveMaterial.ui" line="+14"/>
         <location line="+55"/>
+        <location filename="../../Material/debug/qui/ui_DialogRemoveMaterial.h" line="+96"/>
+        <location line="+3"/>
+        <location filename="../../Material/release/qui/ui_DialogRemoveMaterial.h" line="+96"/>
+        <location line="+3"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
         <location line="-47"/>
+        <location filename="../../Material/debug/qui/ui_DialogRemoveMaterial.h" line="-2"/>
+        <location filename="../../Material/release/qui/ui_DialogRemoveMaterial.h" line="-2"/>
         <source>Select All</source>
         <translation>全选</translation>
     </message>
     <message>
         <location line="+20"/>
+        <location filename="../../Material/debug/qui/ui_DialogRemoveMaterial.h" line="+1"/>
+        <location filename="../../Material/release/qui/ui_DialogRemoveMaterial.h" line="+1"/>
         <source>Clear Select</source>
         <translation>全不选</translation>
     </message>
     <message>
         <location line="+34"/>
+        <location filename="../../Material/debug/qui/ui_DialogRemoveMaterial.h" line="+2"/>
+        <location filename="../../Material/release/qui/ui_DialogRemoveMaterial.h" line="+2"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

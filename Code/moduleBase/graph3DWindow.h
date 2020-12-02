@@ -122,8 +122,9 @@ namespace ModuleBase
 
 		void keyPressEvent(QKeyEvent *e) override;
 		void keyReleaseEvent(QKeyEvent *e) override;
-		void resizeEvent(QResizeEvent * e);
-		
+		void resizeEvent(QResizeEvent * e) override;
+		void leaveEvent(QEvent *event) override;
+		void enterEvent(QEvent *event) override;
 // 
 	signals:
 		//type  0-press  1-release

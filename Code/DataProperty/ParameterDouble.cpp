@@ -5,7 +5,6 @@
 #include <QDomText>
 #include <QDomNodeList>
 #include <QStringList>
-#include "math.h"
 
 namespace DataProperty
 {

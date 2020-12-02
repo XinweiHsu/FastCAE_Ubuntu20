@@ -1,8 +1,8 @@
 #include "GeoComponent.h"
-#include "geometrySet.h"
+#include "GeometrySet.h"
 #include "geometryData.h"
 #include <qdom.h>
-#include <QDebug>
+#include <qDebug>
 
 namespace Geometry
 {

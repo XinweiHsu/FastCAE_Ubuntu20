@@ -75,7 +75,7 @@ extern TreeItemType DATAPROPERTYAPI getTreeItemTypeByString(const QString& type)
 
 extern ProjectTreeType DATAPROPERTYAPI getTreeTypeByString(const QString& type);
 
-extern QString DATAPROPERTYAPI getTreeTypeToSring(ProjectTreeType ty);
+extern QString DATAPROPERTYAPI getTreeTypeToString(ProjectTreeType ty);
 
 
 #endif

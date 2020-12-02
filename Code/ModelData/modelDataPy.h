@@ -21,7 +21,6 @@ namespace ModelData
 //声明为c接口，供python脚本调用
 extern "C"
 {
-	void MODELDATAAPI importGeoComponents(int caseId, char* addcomponentsId);
 	void MODELDATAAPI importComponents(int caseId, const char* addcomponentsId);
 	void MODELDATAAPI importGeometry(int caseId, char* addcomponentsId);
 	void MODELDATAAPI addBC(int caseId, int id, char* bctypetostring);

@@ -44,10 +44,10 @@ def importMesh(filename,suffix,modelID):
   mw.importMesh(str,suf,modelID)
   pass
   
-def exportMesh(filename,suffix):
+def exportMesh(filename,suffix,modelID):
   str = bytes(filename,encoding='utf-8')
   suf = bytes(suffix,encoding='utf-8')
-  mw.exportMesh(str,suf)
+  mw.exportMesh(str,suf,modelID)
   pass
 
 def importGeometry(filename):

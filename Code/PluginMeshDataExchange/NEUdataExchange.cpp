@@ -16,12 +16,12 @@
 
 namespace MeshData
 {
-	NEUdataExchange::NEUdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int KernalId) :
+	NEUdataExchange::NEUdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId) :
 		MeshThreadBase(fileName, operation, mw),
 		_fileName(fileName),
 		_meshData(MeshData::getInstance()),
 		_operation(operation),
-		_writeFileKid(KernalId)
+		_modelId(modelId)
 	{
 
 	}
@@ -195,7 +195,7 @@ namespace MeshData
 		_stream->setCodec("UTF-8");
 		writeBasicInfo();
 		//combine dataset
-		if (_writeFileKid == -1)
+		if (_modelId == -1)
 		{
 			vtkSmartPointer<vtkAppendFilter> appfilter = vtkSmartPointer<vtkAppendFilter>::New();
 			int n = _meshData->getKernalCount();
@@ -212,7 +212,7 @@ namespace MeshData
 		}
 		else
 		{
-			MeshKernal* k = _meshData->getKernalByID(_writeFileKid);
+			MeshKernal* k = _meshData->getKernalByID(_modelId);
 			if (k == nullptr) return false;
 			vtkDataSet* dataset = k->getMeshData();
 

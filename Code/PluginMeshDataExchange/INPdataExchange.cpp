@@ -5,32 +5,44 @@
 #include "meshData/meshSet.h"
 #include "BCBase/BCUserDef.h"
 #include "ModelData/modelDataSingleton.h"
-#include "ModelData/modelDataBaseExtend.h"
+#include "ModelData/ModelDataBaseExtend.h"
 #include "DataProperty/ParameterGroup.h"
 #include "DataProperty/ParameterDouble.h"
+#include "DataProperty/PropertyString.h"
 #include "Material/Material.h"
 #include "ConfigOptions/ConfigOptions.h"
 #include "ConfigOptions/MaterialConfig.h"
 #include "Material/MaterialFactory.h"
 #include "Material/MaterialSingletion.h"
+#include "modulebase/ThreadTaskManager.h"
 #include <vtkUnstructuredGrid.h>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <QDebug>
+#include <qDebug>
 #include <omp.h>
+#include <QFileDialog>
 
+#ifdef Q_OS_WIN
+#define ENDL "\r\n"
+#else
+#define ENDL "\n"
+#endif
+ 
 namespace MeshData
 {
-	INPdataExchange::INPdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId, int writeFileKid) :
+	INPdataExchange::INPdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId) :
 		MeshThreadBase(fileName, operation, mw),
 		_fileName(fileName),
 		_meshData(MeshData::getInstance()),
 		_operation(operation),
-		_writeFileKid(writeFileKid),
 		_modelId(modelId),
 		_mw(mw)
 	{
-
+		if (modelId != -1)
+		{
+			ModelData::ModelDataBase* model = ModelData::ModelDataSingleton::getinstance()->getModelByID(modelId);
+			_Case = dynamic_cast<ModelData::ModelDataBaseExtend*>(model);
+		}
 	}
 	INPdataExchange::~INPdataExchange()
 	{
@@ -72,15 +84,25 @@ namespace MeshData
 		vtkSmartPointer<vtkUnstructuredGrid> dataset = vtkSmartPointer<vtkUnstructuredGrid>::New();
 		QString line;
 	
+		QList<int> inpSetIds;
+		QStringList materialName, density, elastic;
+		QStringList bcSetIds, bcName, bcType;
+		QList<double> displacement, rotation;
+
 		do
 		{
-			if (!_threadRuning) return false;
+			if (!_threadRuning)
+			{
+				file.close();
+				return false;
+			}
 			this->readLine(line);
-			if (line.startsWith("*node") && line.size()<6)
+			if (line.startsWith("*node") && line.size() < 6)
 			{
 				if (!readNodes(dataset, line))
 				{
 					dataset->Delete();
+					file.close();
 					return false;
 				}
 			}
@@ -89,6 +111,7 @@ namespace MeshData
 				if (!readElements(dataset, line))
 				{
 					dataset->Delete();
+					file.close();
 					return false;
 				}
 
@@ -103,37 +126,72 @@ namespace MeshData
 			}
 			if (line.startsWith("*nset"))
 			{
-				this->readNSet(line);
+				this->readNSet(line, inpSetIds);
 			}
 			if (line.startsWith("*elset"))
 			{
-				this->readElSet(line);
+				this->readElSet(line, inpSetIds);
 			}
 
 			//xuxinwie  20200519
 			//if (_stream->atEnd())
 			//	_threadRuning = false;
+			if (_modelId == -1)    continue;
 			if (line.startsWith("*material"))
-				readMaterial(line);
+				readMaterial(line, materialName, density, elastic);
 			if (line.startsWith("** boundary"))
-				readBoundary(line);
+				readBoundary(line, bcSetIds, bcName, bcType, displacement, rotation);
 
 		} while (_threadRuning && !_stream->atEnd());		
 
 		if (_modelId != -1)
 		{	
-			addINPComponents();
-			addINPMaterials();
-			addINPBCs();
+			addINPComponents(inpSetIds);
+			addINPMaterials(materialName, density, elastic);
+			addINPBCs(bcSetIds, bcName, bcType, displacement, rotation);
 			emit _mw->updatePhysicsTreeSignal();
 		}
-		clearString();
+		file.close();
 		return true;
 	}
 
 	bool INPdataExchange::write()
 	{
-		if (_writeFileKid < 1)	return false;
+		QFile file(_fileName);
+		if (!file.open(QIODevice::Truncate | QIODevice::WriteOnly))
+			return false;
+		_stream = new QTextStream(&file);
+
+		if (_modelId == -1)
+		{
+			//点击状态栏按钮导出, 融合所有kernal并导出为INP文件
+			file.close();
+			return false;
+		}
+		else
+		{	
+			//点击Case中菜单导出, 仅导出与Model绑定的一个kernal为INP文件
+			if (_Case->getMeshKernalList().size() != 1)
+			{
+				file.close();
+				return false;
+			}
+
+			int kId = _Case->getMeshKernalList().at(0);
+			vtkDataSet* data = _meshData->getKernalByID(kId)->getMeshData();
+			if (!data)
+			{
+				file.close();
+				return false;
+			}
+			writePoint(data);
+			writeCell(data);
+			writeComponent(kId);
+			writeMaterial();
+			writeBoundary();
+		}
+		file.close();
+		return true;
 	}
 
 	bool INPdataExchange::readNodes(vtkUnstructuredGrid* g, QString &line)
@@ -143,7 +201,7 @@ namespace MeshData
 		int index = 0;
 		while (_threadRuning && !_stream->atEnd())
 		{
-			if (!_threadRuning) return false;
+			if (!_threadRuning)    return false;
 			readLine(line);
 			if (line.contains("*")) break;
 
@@ -195,7 +253,7 @@ namespace MeshData
 
 		while (_threadRuning && !_stream->atEnd())
 		{
-			if (!_threadRuning) return false;
+			if (!_threadRuning)    return false;
 			this->readLine(line);
 			if (line.startsWith("*")) break;
 			vtkSmartPointer<vtkIdList> indexList = vtkSmartPointer<vtkIdList>::New();
@@ -222,7 +280,7 @@ namespace MeshData
 		return true;		
 	}
 
-	bool INPdataExchange::readNSet(QString &line)
+	bool INPdataExchange::readNSet(QString &line, QList<int>& inpSetIds)
 	{
 		bool isgen = false;
 		if (line.contains("generate")) isgen = true;
@@ -246,21 +304,21 @@ namespace MeshData
 //		vtkSmartPointer<vtkIdTypeArray> array = vtkSmartPointer<vtkIdTypeArray>::New();
 		while (_threadRuning && !_stream->atEnd())
 		{
-			if (!_threadRuning) return false;
+			if (!_threadRuning)    return false;
 			this->readLine(line);
 			if (line.startsWith("*"))
 			{
 //				set->setIDList(array);
 				_meshData->appendMeshSet(set);
-				_setIds.append(set->getID());
+				inpSetIds.append(set->getID());
 			}
 			if (line.startsWith("*nset"))
 			{
-				this->readNSet(line);
+				this->readNSet(line, inpSetIds);
 			}
 			if (line.startsWith("*elset"))
 			{
-				this->readElSet(line);
+				this->readElSet(line, inpSetIds);
 			}
 			if (line.startsWith("*") && (!line.startsWith("*nset")))
 				return true;
@@ -282,19 +340,19 @@ namespace MeshData
 
 			for (int i = 0; i < sid.size(); ++i)
 			{
+				if(sid.at(i).size() == 0)    continue;
 				int id = sid.at(i).toInt();
 				int index = _nodeIDIndex.value(id);
 //				array->InsertNextValue(index);
 				set->appendMember(kid, index);
 			}
-
 			//xuxinwie  20200519
 // 			if (_stream->atEnd())
 // 				_threadRuning = false;
 		}
 	}
 
-	bool INPdataExchange::readElSet(QString &line)
+	bool INPdataExchange::readElSet(QString &line, QList<int>& inpSetIds)
 	{
 		bool isgen = false;
 		if (line.contains("generate")) isgen = true;
@@ -324,15 +382,15 @@ namespace MeshData
 			{
 //				set->setIDList(array);
 				_meshData->appendMeshSet(set);
-				_setIds.append(set->getID());
+				inpSetIds.append(set->getID());
 			}
 			if (line.startsWith("*elset"))
 			{
-				this->readElSet(line);
+				this->readElSet(line, inpSetIds);
 			}
 			if (line.startsWith("*nset"))
 			{
-				this->readNSet(line);
+				this->readNSet(line, inpSetIds);
 			}
 			if (line.startsWith("*") && (!line.startsWith("*elset")))
 				return true;
@@ -354,6 +412,7 @@ namespace MeshData
 
 			for (int i = 0; i < sid.size(); ++i)
 			{
+				if (sid.at(i).size() == 0)    continue;
 				int id = sid.at(i).toInt();
 				int index = _elemIDIndex.value(id);
 //				array->InsertNextValue(index);
@@ -366,44 +425,43 @@ namespace MeshData
 		}
 	}
 
-	bool INPdataExchange::readMaterial(QString &line)
+	bool INPdataExchange::readMaterial(QString &line, QStringList& materialName, QStringList& density, QStringList& elastic)
 	{
 		if (line.contains("** boundary"))
 			return true;
-		_materialName.append(line.split('=').at(1));
+		materialName.append(line.split('=').at(1));
 		while (_threadRuning && !_stream->atEnd())
 		{
 			if (!_threadRuning) return false;
 			readLine(line);
 			readLine(line);
-			_density.append(line.left(line.size() - 1));
+			density.append(line.left(line.size() - 1));
 			readLine(line);
 			readLine(line);
 			if (line.contains(".,"))
-				_elastic.append(line.remove(".,"));
+				elastic.append(line.remove(".,"));
 			else
-				_elastic.append(line.remove(','));
+				elastic.append(line.remove(','));
 
 			readLine(line);
 			if (line.startsWith("*material"))
-				readMaterial(line);
+				readMaterial(line, materialName, density, elastic);
 			if (line.contains("** boundary"))
 				return true;
 		}
 		return false;
 	}
 
-	bool INPdataExchange::readBoundary(QString &line)
+	bool INPdataExchange::readBoundary(QString &line, QStringList& bcSetIds, QStringList& bcName, QStringList& bcType, QList<double>& displacement, QList<double>& rotation)
 	{
 		if (line.startsWith("** output"))
 			return true;
 
 		QStringList lineList;
+		auto bcConfig = ConfigOption::ConfigOption::getInstance()->getBCConfig();
 		while (_threadRuning && !_stream->atEnd())
 		{
 			if (!_threadRuning) return false;
-			QString bcName, bcType;
-
 			if (!line.startsWith("** name"))
 			{
 				readLine(line);
@@ -412,13 +470,10 @@ namespace MeshData
 			else
 			{
 				lineList = line.split(' ');
-				bcName = lineList.at(2);
-				bcType = lineList.at(4);
+				bcName.append(lineList.at(2));
+				bcType.append(lineList.at(4));				
 				readLine(line);
 			}
-			
-			_bcName.append(bcName);
-			_bcType.append(bcType);
 
 			QStringList lineList;
 			for (int i = 0; i < 6; i++)
@@ -428,89 +483,78 @@ namespace MeshData
 
 				auto set = _meshData->getMeshSetByName(lineList.at(0));
 				if (!set)	continue;
-				_bcSetIds.append(QString::number(set->getID()));
+				bcSetIds.append(QString::number(set->getID()));
 
 				if ((i == 0 || i == 1 || i == 2) && lineList.size() == 3)
-					_displacement << 0;
+					displacement << 0;
 				else if ((i == 0 || i == 1 || i == 2) && lineList.size() == 4)
-					_displacement << lineList.at(3).toDouble();
+					displacement << lineList.at(3).toDouble();
 				else if ((i == 3 || i == 4 || i == 5) && lineList.size() == 3)
-					_rotation << 0;
+					rotation << 0;
 				else if ((i == 3 || i == 4 || i == 5) && lineList.size() == 4)
-					_rotation << lineList.at(3).toDouble();
+					rotation << lineList.at(3).toDouble();
 			}
-			_bcSetIds.removeDuplicates();
+			bcSetIds.removeDuplicates();
 
 			readLine(line);
 			if (line.startsWith("** name"))
-				readBoundary(line);
+				readBoundary(line, bcSetIds, bcName, bcType, displacement, rotation);
 			if (line.startsWith("** output"))
 				return true;
 		}
 		return false;
 	}
 
-	void INPdataExchange::addINPComponents()
+	void INPdataExchange::addINPComponents(const QList<int>& inpSetIds)
 	{
-		ModelData::ModelDataBase* model = ModelData::ModelDataSingleton::getinstance()->getModelByID(_modelId);
-		if (model == nullptr) return;
-		model->setComponentIDList(_setIds);
+		if (inpSetIds.size() <= 0)	return;
+		auto kId = _meshData->getMeshSetByID(inpSetIds.at(0))->getKernals();
+		_Case->setMeshKernelList(kId);
+		_Case->setComponentIDList(inpSetIds);
 	}
 
-	void INPdataExchange::addINPMaterials()
+	void INPdataExchange::addINPMaterials(const QStringList& materialName, const QStringList& density, const QStringList& elastic)
 	{
+		QList<int> inpMaIds;
 		QString stype = QObject::tr("INP Material");
-#pragma omp parallel for firstprivate(stype)
-		for (int i = 0; i < _materialName.size(); i++)
+//#pragma omp parallel for firstprivate(stype)
+		auto materSteWard = Material::MaterialSingleton::getInstance();
+		for (int i = 0; i < materialName.size(); i++)
 		{
-			// 			qDebug() << stype;
-			// 			qDebug() << omp_get_thread_num();
-			// 			qDebug() << _materialName;
+// 			qDebug() << stype;
+// 			qDebug() << omp_get_thread_num();
+// 			qDebug() << _materialName;
 
-			Material::Material* material = nullptr;
-			auto ma = ConfigOption::ConfigOption::getInstance()->getMaterialConfig()->getMaterialByType(stype);
-			if (ma != nullptr)
-			{
-				material = new Material::Material;
-				material->copy(ma);
-			}
-			else
-				material = Material::MaterialFactory::createMaterial(stype);
-
-			if (material == nullptr)
-			{
-				QMessageBox::warning(NULL, QObject::tr("Warning"), QObject::tr("Material create failed!"));
-				return;
-			}
-
-			QStringList elasticList = _elastic.at(i).split(" ");
-			material->setName(_materialName.at(i));
-			material->appendProperty(QObject::tr("Density"), _density.at(i));
+			QStringList elasticList = elastic.at(i).split(" ");
+			Material::Material* material = new Material::Material;
+			material->setType(stype);
+			material->setName(materialName.at(i));
+			material->appendProperty(QObject::tr("Density"), density.at(i));
 			material->appendProperty(QObject::tr("Elasticity Modulus"), QString(elasticList.at(0)));
 			material->appendProperty(QObject::tr("Poisson Ratio"), QString(elasticList.at(1)));
-			Material::MaterialSingleton::getInstance()->appendMaterial(material);
+			materSteWard->appendMaterial(material);
+			inpMaIds << material->getID();
 		}
+		_Case->bindInpMaterialIds(inpMaIds);
 	}
 
-	void INPdataExchange::addINPBCs()
+	void INPdataExchange::addINPBCs(const QStringList& bcSetIds, const QStringList& bcName, const QStringList& bcType, const QList<double>& displacement, const QList<double>& rotation)
 	{
-		auto model = ModelData::ModelDataSingleton::getinstance()->getModelByID(_modelId);
-		ModelData::ModelDataBaseExtend *data = dynamic_cast<ModelData::ModelDataBaseExtend*>(model);
 		QStringList paraDescribes;
 		paraDescribes << "X" << "Y" << "Z";
 
-		for(int i = 0; i < _bcSetIds.size(); i++)
+		for(int i = 0; i < bcSetIds.size(); i++)
 		{
 			BCBase::BCUserDef* bc = new BCBase::BCUserDef;
-			bc->bingdingComponentID(_bcSetIds.at(i).toInt());
-			bc->setName(_bcName.at(i));
-			data->appeendBC(bc);
+			bc->bingdingComponentID(bcSetIds.at(i).toInt());
+			bc->setName(bcName.at(i));
+			_Case->appeendBC(bc);
 			
 			QString qdis, qrot;
-			DataProperty::ParameterGroup* displacement = new DataProperty::ParameterGroup;
-			DataProperty::ParameterGroup* rotation = new DataProperty::ParameterGroup;
-			displacement->setDescribe(_bcType.at(i).split('/').at(0));
-			rotation->setDescribe(_bcType.at(i).split('/').at(1));
+			DataProperty::ParameterGroup* pagDis = new DataProperty::ParameterGroup;
+			DataProperty::ParameterGroup* pagRot = new DataProperty::ParameterGroup;
+			pagDis->setDescribe(bcType.at(i).split('/').at(0));
+			pagRot->setDescribe(bcType.at(i).split('/').at(1));
 
 			for (int j = 0; j < 3; j++)
 			{
@@ -526,30 +570,260 @@ namespace MeshData
 				dispara->setDescribe(qdis);
 				rotpara->setDescribe(qrot);
 
-				dispara->setValue(_displacement.at(3 * i + j));
-				rotpara->setValue(_rotation.at(3 * i + j));
+				dispara->setValue(displacement.at(3 * i + j));
+				rotpara->setValue(rotation.at(3 * i + j));
 
-				displacement->appendParameter(dispara);
-				rotation->appendParameter(rotpara);
+				pagDis->appendParameter(dispara);
+				pagRot->appendParameter(rotpara);
 			}
 
-			bc->appendParameterGroup(displacement);
-			bc->appendParameterGroup(rotation);
+			bc->appendParameterGroup(pagDis);
+			bc->appendParameterGroup(pagRot);
 			bc->generateParaInfo();
 		}
 	}
 
-	void INPdataExchange::clearString()
+	void INPdataExchange::writePoint(vtkDataSet* data)
 	{
-		_setIds.clear();
-		_materialName.clear();
-		_density.clear();
-		_elastic.clear();
-		_bcSetIds.clear();
-		_bcName.clear();
-		_bcType.clear();
-		_displacement.clear();
-		_rotation.clear();
+		*_stream << "*Node" << endl;
+		int pIndex = 0;
+		int nPoint = data->GetNumberOfPoints();
+		double* xyz = NULL;
+		QString qPointIdxyz;
+		while (pIndex < nPoint)
+		{
+			if (!_threadRuning)    return;
+			xyz = data->GetPoint(pIndex);
+			pIndex++;
+			qPointIdxyz.append(QString::number(pIndex) + ",");
+			qPointIdxyz.append(QString::number(xyz[0]) + ",");
+			qPointIdxyz.append(QString::number(xyz[1]) + ",");
+			qPointIdxyz.append(QString::number(xyz[2]) + ENDL);
+
+			if (qPointIdxyz.size() > 1024)
+			{
+				*_stream << qPointIdxyz;
+				qPointIdxyz.clear();
+			}
+			if (pIndex == nPoint && qPointIdxyz.size() > 0)
+				*_stream << qPointIdxyz;
+		}
+	}
+
+	void INPdataExchange::writeCell(vtkDataSet* data)
+	{
+		*_stream << "*Element, type=";
+		int nCell = data->GetNumberOfCells();
+		if (nCell < 0)    return;
+		if (data->GetCell(0)->GetCellType() == VTK_TETRA)
+			*_stream << "C3D4" << endl;
+
+		int cIndex = 0;
+		QString qCellIdPointIds;
+		while (cIndex < nCell)
+		{
+			if (!_threadRuning)    return;
+			qCellIdPointIds.append(QString::number(cIndex + 1) + ",");
+			auto ptIdIndexs = data->GetCell(cIndex)->GetPointIds();
+			qCellIdPointIds.append(QString::number(ptIdIndexs->GetId(0) + 1) + ",");
+			qCellIdPointIds.append(QString::number(ptIdIndexs->GetId(1) + 1) + ",");
+			qCellIdPointIds.append(QString::number(ptIdIndexs->GetId(2) + 1) + ",");
+			qCellIdPointIds.append(QString::number(ptIdIndexs->GetId(3) + 1) + ENDL);
+
+			if (qCellIdPointIds.size() > 1024)
+			{
+				*_stream << qCellIdPointIds;
+				qCellIdPointIds.clear();
+			}
+			cIndex++;
+			if (cIndex == nCell && qCellIdPointIds.size() > 0)
+				*_stream << qCellIdPointIds;
+		}
+	}
+
+	void INPdataExchange::writeComponent(int kId)
+	{
+		QList<int> inpSetIds = _Case->getComponentIDList();
+		int nSet = inpSetIds.size();
+		if (nSet == 0)    return;
+
+		QString qSet, inpSetName;
+		int index = 0, nMember = 0, head = -1, tail = -1;
+		QList<int> members;
+
+		while (index < nSet)
+		{
+			if (!_threadRuning)    return;
+			auto inpSet = _meshData->getMeshSetByID(inpSetIds.at(index));
+			index++;
+			if (inpSet->getSetType() == Node)
+				qSet.append("*Nset,nset=");
+			else if (inpSet->getSetType() == Element)
+				qSet.append("*Elset,elset=");
+
+			members = inpSet->getKernalMembers(kId);
+			nMember = members.size();
+			if (nMember <= 0)    
+				continue;
+
+			head = members.at(0) + 1;
+			tail = members.at(nMember - 1) + 1;
+			if (head > tail)
+			{
+				int temp = head;
+				head = tail;
+				tail = temp;
+			}
+
+			inpSetName = inpSet->getName().toUpper();
+			if (inpSetName.endsWith("_GEN"))
+				endsWithGEN(inpSetName, qSet, head, tail);
+			else
+				notEndsWithGEN(inpSetName, qSet, nMember, members);
+
+			if (qSet.size() > 1024)
+			{
+				*_stream << qSet;
+				qSet.clear();
+			}
+			if (index == nSet && qSet.size() > 0)
+				*_stream << qSet;
+		}
+	}
+
+	void INPdataExchange::writeMaterial()
+	{		
+		auto materSteWard = Material::MaterialSingleton::getInstance();
+		const QList<int> inpMaterIds = _Case->getInpMaterialIds();
+		DataProperty::PropertyString* strPro = NULL;
+		QString qMaterial;
+		int index = 0;
+		for (int inpMaterId : inpMaterIds)
+		{
+			index++;
+			qMaterial.append("*Material,name=");
+
+			auto inpMaterial = materSteWard->getMaterialByID(inpMaterId);
+			qMaterial.append(inpMaterial->getName() + ENDL + "*Density" + ENDL);
+
+			strPro = dynamic_cast<DataProperty::PropertyString*>(inpMaterial->getPropertyByName(QObject::tr("Density")));
+			qMaterial.append(strPro->getValue() + "," + ENDL + "*Elastic" + ENDL);
+
+			strPro = dynamic_cast<DataProperty::PropertyString*>(inpMaterial->getPropertyByName(QObject::tr("Elasticity Modulus")));
+			qMaterial.append(strPro->getValue() + ", ");
+
+			strPro = dynamic_cast<DataProperty::PropertyString*>(inpMaterial->getPropertyByName(QObject::tr("Poisson Ratio")));
+			qMaterial.append(strPro->getValue() + ENDL);
+
+			if (qMaterial.size() > 1024)
+			{
+				*_stream << qMaterial;
+				qMaterial.clear();
+			}
+
+			if (index == inpMaterIds.size() && qMaterial.size() > 0)
+				*_stream << qMaterial;
+		}
+	}
+
+	void INPdataExchange::writeBoundary()
+	{
+		//每个set只能由一种kernal构成, 不能是两个或多个
+		//导出边界时如果边界绑定的组件们所对应的kernalId必须一样,
+		//因为边界中记录的是点或单元的Id, 两个不同的kernal点或单元的id会重复
+		int nBC = _Case->getBCCount();
+		if (nBC <= 0)    return;
+		*_stream << "** BOUNDARY CONDITIONS" << endl;
+
+		BCBase::BCUserDef* inpBC = NULL;
+		DataProperty::ParameterGroup* pagDis = NULL;
+		DataProperty::ParameterGroup* pagRot = NULL;
+		DataProperty::ParameterDouble* paraDis = NULL;
+		DataProperty::ParameterDouble* paraRot = NULL;
+
+		QString qBC, inpSetName;
+		for (int i = 0; i < nBC; i++)
+		{
+			inpBC = dynamic_cast<BCBase::BCUserDef*>(_Case->getBCAt(i));
+			if(!inpBC || inpBC->getParameterGroupCount() != 2)    continue;
+			inpSetName = _meshData->getMeshSetByID(inpBC->getComponentID())->getName();
+
+			pagDis = inpBC->getParameterGroupAt(0);
+			pagRot = inpBC->getParameterGroupAt(1);
+
+			qBC.append("** Name: " + inpBC->getName() + " Type: ");
+			qBC.append(pagDis->getDescribe() + "/" + pagRot->getDescribe() + ENDL + "*Boundary" + ENDL);
+
+			QString qDis, qRot;
+			for (int j = 0; j < 3; j++)
+			{
+				paraDis = dynamic_cast<DataProperty::ParameterDouble*>(pagDis->getParameterAt(j));
+				paraRot = dynamic_cast<DataProperty::ParameterDouble*>(pagRot->getParameterAt(j));
+
+				qDis.append(inpSetName + "," + QString::number(j + 1) + "," + QString::number(j + 1) + ",");
+				qDis.append(QString::number(paraDis->getValue()) + ENDL);
+
+				qRot.append(inpSetName + "," + QString::number(j + 4) + "," + QString::number(j + 4) + ",");
+				qRot.append(QString::number(paraRot->getValue()) + ENDL);
+			}
+			qBC.append(qDis + qRot);
+			if (qBC.size() > 1024)
+			{
+				*_stream << qBC;
+				qBC.clear();
+			}
+			if (i == nBC - 1 && qBC.size() > 0)
+				*_stream << qBC;
+		}
+	}
+
+	void INPdataExchange::endsWithGEN(QString& inpSetName, QString& qSet, int head, int tail)
+	{
+		inpSetName.remove("_GEN");
+		qSet.append(inpSetName + ",generate").append(ENDL);
+		qSet.append(QString::number(head) + ",");
+		qSet.append(QString::number(tail) + ",");
+		qSet.append(ENDL);
+	}
+
+	void INPdataExchange::notEndsWithGEN(QString& inpSetName, QString& qSet, int nMember, const QList<int>& members)
+	{
+		qSet.append(inpSetName).append(ENDL);
+		if (nMember == 1)
+		{
+			qSet.append(QString::number(members.at(0) + 1) + ",");
+			qSet.append(ENDL);
+			return;
+		}
+
+		int num = nMember / 16;
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
+				qSet.append(QString::number(members.at(16 * i + j) + 1));
+				if (j != 15)
+					qSet.append(",");
+			}
+			qSet.append(ENDL);
+			if (qSet.size() > 1024)
+			{
+				*_stream << qSet;
+				qSet.clear();
+			}
+		}
+
+		int remainder = nMember % 16;
+		if (remainder != 0)
+		{
+			for (int m = nMember - remainder; m < nMember; m++)
+			{
+				qSet.append(QString::number(members.at(m) + 1));
+				if (m != nMember - 1)
+					qSet.append(",");
+			}
+			qSet.append(ENDL);
+		}
 	}
 
 	void INPdataExchange::run()
@@ -565,8 +839,8 @@ namespace MeshData
 			break;
 		case MESH_WRITE:
 			emit showInformation(tr("Exporting INP Mesh File To \"%1\"").arg(_fileName));
-//			result = write();
-//			setWriteResult(result);
+			result = write();
+			setWriteResult(result);
 			break;
 		}
 		defaultMeshFinished();

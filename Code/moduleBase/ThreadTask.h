@@ -32,7 +32,6 @@ namespace ModuleBase{
 		void showButton(bool);
 		void showInformation(QString s);
 		//void taskFinished(ThreadTask* t);
-		void updateMesh();
 
 		void threadFinished();
 		void threadWait(int n);

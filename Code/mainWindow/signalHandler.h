@@ -28,7 +28,7 @@ namespace GUI
 
 	signals:
 		void importMeshPySig(QString, QString, int);
-		void exportMeshPySig(QString,QString);
+		void exportMeshPySig(QString, QString, int);
 		void open3DGraphWindowPySig();
 		void open2DPlotWindowPySig();
 		bool openProjectFileSig(QString fileName);
@@ -39,15 +39,20 @@ namespace GUI
 
 	public:
 		//不要通过返回值判断
-		bool importMesh(const QString &fileName, QString s, int modelId);
 		bool importGeometry(const QStringList &filenames);
 		bool exportGeometry(QString f);
 		QString getMD5();
 		/*创建工程 */
 		void on_actionNew();
+		///获取求解管理器
+		SolveProcessManager* getSolveProcessManager();
+		
 	
-
 	public slots:
+		//导入网格
+		bool importMeshSlot(const QString &fileName, const QString& suffix, int modelId);
+		//导出网格
+		bool exportMeshSlot(const QString &fileName, const QString& suffix, int modelId);
 		///清除数据
 		void clearData(bool unlock = true);
 		/*求解 */
@@ -71,9 +76,6 @@ namespace GUI
 		void genMesh();
 		//添加求解器生成网格
 		void appendGeneratedMesh(QString name, vtkDataSet* dataset);
-		//导出网格
-		void exportMeshByID(QString fileName, QString suffix, int kenerlID = -1);
-		void exportMeshPy(QString fileName, QString suffix);
 		///刷新Action状态
 		void updateActionsStates();
 		//独立打开2D后处理窗口
@@ -131,7 +133,7 @@ namespace GUI
 		void GeoSplitter();
 		void MakeFillHole();
 		void MakeRemoveSurface();
-
+		void MakeFillGap();
 	private:
 		void handleSingleClickEvent(QTreeWidgetItem*item, int proID);
 		void openPreWinPy();

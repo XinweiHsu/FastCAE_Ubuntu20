@@ -2,7 +2,7 @@
 #define MESHSET_H_
 
 #include "meshDataAPI.h"
-#include "DataProperty/ComponentBase.h"
+#include "Dataproperty/ComponentBase.h"
 #include <QString>
 #include <QMultiHash>
 

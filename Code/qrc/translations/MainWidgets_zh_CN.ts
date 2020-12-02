@@ -44,7 +44,7 @@
 <context>
     <name>CreateGeoComponentDialog</name>
     <message>
-        <location filename="../../MainWidgets/DialogCreateGeoComponent.ui" line="+14"/>
+        <location filename="../../MainWidgets/DialogCreateGeoComponent.ui" line="+26"/>
         <source>Dialog</source>
         <translation>创建几何组件</translation>
     </message>
@@ -67,14 +67,6 @@
         <translation>创建组件</translation>
     </message>
     <message>
-        <source>Set Name:</source>
-        <translation type="vanished">组件名称:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="vanished">类型：</translation>
-    </message>
-    <message>
         <location line="+18"/>
         <source>Set Name : </source>
         <translation>组件名称 : </translation>
@@ -90,17 +82,17 @@
         <translation>单元</translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="+23"/>
+        <source>Find Conplanar Points or Cells</source>
+        <translation>寻找共面的点或者单元</translation>
+    </message>
+    <message>
+        <location line="-28"/>
         <source>Node</source>
         <translation>节点</translation>
     </message>
     <message>
-        <location line="+28"/>
-        <source>Find ConplanarIds</source>
-        <translation>寻找共面Id</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+38"/>
         <source>Find Condition</source>
         <translation>寻找条件</translation>
     </message>
@@ -180,17 +172,6 @@
         <location line="+7"/>
         <source>Cancel</source>
         <translation>取消</translation>
-    </message>
-</context>
-<context>
-    <name>DialogSetRename</name>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">重命名</translation>
-    </message>
-    <message>
-        <source>New name:</source>
-        <translation type="vanished">新名称：</translation>
     </message>
 </context>
 <context>
@@ -342,7 +323,7 @@
 <context>
     <name>MainWidget::CreateGeoComponentDialog</name>
     <message>
-        <location filename="../../MainWidgets/DialogCreateGeoComponent.cpp" line="+20"/>
+        <location filename="../../MainWidgets/DialogCreateGeoComponent.cpp" line="+21"/>
         <source>Ok</source>
         <translation>确定</translation>
     </message>
@@ -370,6 +351,16 @@
         <location line="+1"/>
         <source>Body</source>
         <translation>体</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>No Point or Line Surface Body selected !</source>
+        <translation>没有点、线、面、体被选择！</translation>
     </message>
 </context>
 <context>
@@ -451,7 +442,7 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+24"/>
         <source>PointId : </source>
         <translation>节点Id : </translation>
     </message>
@@ -461,10 +452,10 @@
         <translation>单元Id : </translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+168"/>
         <location line="+12"/>
-        <location line="+17"/>
-        <location line="+29"/>
+        <location line="+16"/>
+        <location line="+30"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -475,8 +466,8 @@
     </message>
     <message>
         <location line="-12"/>
-        <location line="+29"/>
-        <location line="+29"/>
+        <location line="+28"/>
+        <location line="+30"/>
         <source>No Node or Element selected !</source>
         <translation>当前没有选中的节点或单元！</translation>
     </message>
@@ -498,8 +489,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>VTKData Transform</source>
-        <translation>数据变形</translation>
+        <source>Mesh Modeling</source>
+        <translation>网格建模</translation>
     </message>
     <message>
         <location line="+78"/>
@@ -577,28 +568,6 @@
         <location line="+30"/>
         <source>Remove</source>
         <translation>移除</translation>
-    </message>
-</context>
-<context>
-    <name>MainWidget::GeometryViewProvider</name>
-    <message>
-        <source>Hide</source>
-        <translation type="vanished">隐藏</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">显示全部</translation>
-    </message>
-</context>
-<context>
-    <name>MainWidget::GeometrysetRenameDialog</name>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">警告</translation>
-    </message>
-    <message>
-        <source>The Same Name!</source>
-        <translation type="vanished">相同的名称！</translation>
     </message>
 </context>
 <context>
@@ -701,25 +670,25 @@
     <name>MainWidget::PhysicsWidget</name>
     <message>
         <location filename="../../MainWidgets/PhysicsWidget.cpp" line="+39"/>
-        <location line="+258"/>
+        <location line="+259"/>
         <location line="+283"/>
         <source>Materials</source>
         <translation>材料</translation>
     </message>
     <message>
-        <location line="-345"/>
+        <location line="-346"/>
         <source>Load From Material Lib</source>
         <translation>从材料库导入</translation>
     </message>
     <message>
         <location line="-193"/>
-        <location line="+274"/>
+        <location line="+275"/>
         <location line="+265"/>
         <source>Case</source>
         <translation>算例</translation>
     </message>
     <message>
-        <location line="-344"/>
+        <location line="-345"/>
         <source>Create Material</source>
         <translation>创建材料</translation>
     </message>
@@ -774,7 +743,12 @@
         <translation>导入INP文件</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+6"/>
+        <source>Export INP File</source>
+        <translation>导出INP文件</translation>
+    </message>
+    <message>
+        <location line="+109"/>
         <location line="+157"/>
         <location line="+6"/>
         <location line="+27"/>
@@ -1197,40 +1171,18 @@
     <message>
         <location filename="../../MainWidgets/MainWidgetsPy.cpp" line="+178"/>
         <location line="+32"/>
-        <location line="+28"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location line="-60"/>
+        <location line="-32"/>
         <source>The material that you want to load from lib already exists!</source>
         <translation>已存在同名的材料！</translation>
     </message>
     <message>
         <location line="+32"/>
-        <location line="+28"/>
         <source>Material create failed!</source>
         <translation>材料创建失败！</translation>
-    </message>
-    <message>
-        <location line="-15"/>
-        <source>INP Material</source>
-        <translation>爱恩屁材料</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Density</source>
-        <translation>密度</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Elasticity Modulus</source>
-        <translation>弹性模量 </translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Poisson Ratio</source>
-        <translation>泊松比</translation>
     </message>
 </context>
 <context>

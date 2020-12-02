@@ -5,26 +5,36 @@
     <name>PluginManageDialog</name>
     <message>
         <location filename="../../PluginManager/PluginManageDialog.ui" line="+14"/>
+        <location filename="../../PluginManager/debug/qui/ui_PluginManageDialog.h" line="+122"/>
+        <location filename="../../PluginManager/release/qui/ui_PluginManageDialog.h" line="+122"/>
         <source>Plugin Manager</source>
         <translation>插件管理</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../PluginManager/debug/qui/ui_PluginManageDialog.h" line="+1"/>
+        <location filename="../../PluginManager/release/qui/ui_PluginManageDialog.h" line="+1"/>
         <source>Available:</source>
         <translation>可用插件：</translation>
     </message>
     <message>
         <location line="+14"/>
+        <location filename="../../PluginManager/debug/qui/ui_PluginManageDialog.h" line="+1"/>
+        <location filename="../../PluginManager/release/qui/ui_PluginManageDialog.h" line="+1"/>
         <source>&gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../PluginManager/debug/qui/ui_PluginManageDialog.h" line="+1"/>
+        <location filename="../../PluginManager/release/qui/ui_PluginManageDialog.h" line="+1"/>
         <source>&lt;&lt;</source>
         <translation></translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../PluginManager/debug/qui/ui_PluginManageDialog.h" line="+1"/>
+        <location filename="../../PluginManager/release/qui/ui_PluginManageDialog.h" line="+1"/>
         <source>Installed:</source>
         <translation>已安装插件：</translation>
     </message>

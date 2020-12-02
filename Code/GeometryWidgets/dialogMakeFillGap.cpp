@@ -10,6 +10,7 @@
 #include <QMessageBox.h>
 #include "geometry/geometryParaMakeFillGap.h"
 #include <BRepTools.hxx>
+#include "python/PyAgent.h"
 namespace GeometryWidget
 {
 	
@@ -32,17 +33,19 @@ namespace GeometryWidget
 		_isEdit = true;
 		_editSet = set;
 		emit hideGeometry(_editSet);
-	
+		
 		Geometry::GeometryModelParaBase* bp = _editSet->getParameter();
 		Geometry::GeometryParaMakeFillGap* para = dynamic_cast<Geometry::GeometryParaMakeFillGap*>(bp);
 		if (para == nullptr) return;
-
+		
 		QList<QPair<Geometry::GeometrySet*, int>> temp = para->getShapes();
 		if (temp.size() != 2) return;
 		emit showGeometry(temp.front().first);
 		emit showGeometry(temp.back().first);
 
 		_typeindex = para->getType();
+		_ui->tabWidget->setCurrentIndex(_typeindex);
+		_ui->comboBoxType->setCurrentIndex(_typeindex);
 		switch (_typeindex)
 		{
 		case 0:
@@ -63,8 +66,7 @@ namespace GeometryWidget
 		default:
 			break;
 		}
-		_ui->tabWidget->setCurrentIndex(_typeindex);
-		_ui->comboBoxType->setCurrentIndex(_typeindex);
+		
 	}
 
 	MakeFillGapDialog::~MakeFillGapDialog()
@@ -107,7 +109,7 @@ namespace GeometryWidget
 
 	void MakeFillGapDialog::accept()
 	{
-		Command::CommandFillGap* c = new Command::CommandFillGap(_mainWindow, _preWindow);
+		/*Command::CommandFillGap* c = new Command::CommandFillGap(_mainWindow, _preWindow);
 		c->setGapType(_typeindex);
 		switch (_typeindex)
 		{
@@ -123,7 +125,41 @@ namespace GeometryWidget
 		{
 			QMessageBox::warning(this, tr("Warning"), tr("Create failed !"));
 			return;
+		}*/
+
+		QStringList codes{};
+		codes += QString("fillgap = CAD.FillGap()");
+
+		if (_isEdit)
+			codes += QString("fillgap.setEditID(%1)").arg(_editSet->getID());
+		QString str{};
+		switch (_typeindex)
+		{
+		case 0:str = "Edge"; 
+			codes += QString("fillgap.setIndexOfShape1(%1,%2)").arg(_curve.front().first->getID()).arg(_curve.front().second);
+			codes += QString("fillgap.setIndexOfShape2(%1,%2)").arg(_curve.back().first->getID()).arg(_curve.back().second);
+			break;
+		case 1:str = "Surface";
+			codes += QString("fillgap.setIndexOfShape1(%1,%2)").arg(_surface.front().first->getID()).arg(_surface.front().second);
+			codes += QString("fillgap.setIndexOfShape2(%1,%2)").arg(_surface.back().first->getID()).arg(_surface.back().second);
+			break;
+		case 2:str = "Solid"; 
+			codes += QString("fillgap.setIndexOfShape1(%1,%2)").arg(_solid.front().first->getID()).arg(_solid.front().second);
+			codes += QString("fillgap.setIndexOfShape2(%1,%2)").arg(_solid.back().first->getID()).arg(_solid.back().second);
+			break;
+		default:
+			break;
 		}
+		codes += QString("fillgap.setFillGapType('%1')").arg(str);
+	
+		if (_isEdit)
+			codes += QString("fillgap.edit()");
+		else
+			codes += QString("fillgap.create()");
+
+		_pyAgent->submit(codes);
+
+
 		QDialog::accept();
 		this->close();
 	}
@@ -161,9 +197,9 @@ namespace GeometryWidget
 		case 0: FillGapOfCurve(set, index); break;
 		case 1: FillGapOfSurface(set, index); break;
 		case 2: FillGapOfSolid(set, index); break;
-		default:break;
-		}
 
+		default:break;
+		}   
 	}
 
 
@@ -182,7 +218,7 @@ namespace GeometryWidget
 			_curve.removeFirst();
 		}
 		_ui->topedgelabel_2->setText(QString(tr("Selected Object(%1)")).arg(_curve.size()));
-
+		
 	}
 
 	void MakeFillGapDialog::FillGapOfSurface(Geometry::GeometrySet* set, int index)
@@ -200,8 +236,6 @@ namespace GeometryWidget
 			_surface.removeFirst();
 		}
 		_ui->topedgelabel_3->setText(QString(tr("Selected Object(%1)")).arg(_surface.size()));
-
-		
 	}
 
 	void MakeFillGapDialog::FillGapOfSolid(Geometry::GeometrySet* set, int index)
@@ -220,7 +254,7 @@ namespace GeometryWidget
 			_solid.removeFirst();
 		}
 		_ui->topedgelabel_4->setText(QString(tr("Selected Object(%1)")).arg(_solid.size()));
-
+		
 	}
 
 	void MakeFillGapDialog::HighlightCurve(bool f)
@@ -230,6 +264,7 @@ namespace GeometryWidget
 		{
 			QPair<Geometry::GeometrySet*, int> onepair = *it;
 			emit highLightGeometryEdgeSig(onepair.first, onepair.second, f);
+			
 		}
 	}
 
@@ -240,6 +275,7 @@ namespace GeometryWidget
 		{
 			QPair<Geometry::GeometrySet*, int> onepair = *it;
 			emit highLightGeometryFaceSig(onepair.first, onepair.second, f);
+			
 		}
 	}
 

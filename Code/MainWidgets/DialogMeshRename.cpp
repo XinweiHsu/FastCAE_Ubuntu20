@@ -3,7 +3,7 @@
 #include "meshData/meshSingleton.h"
 #include "meshData/meshKernal.h"
 #include "meshData/meshSet.h"
-#include "mainWindow/mainWindow.h"
+#include "mainwindow/mainWindow.h"
 #include "DataProperty/DataBase.h"
 #include <QMessageBox>
 #include <QTreeWidgetItem>

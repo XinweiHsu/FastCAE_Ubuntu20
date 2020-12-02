@@ -292,7 +292,7 @@ namespace ModelData
 //		qDebug() << name;
     }
 
-    QString ModelDataBase::getOutputFileName()
+    QString& ModelDataBase::getOutputFileName()
     {
         return _outputFileName;
     }
@@ -336,13 +336,15 @@ namespace ModelData
         _bcList.removeAt(index);
     }
 
-	void ModelDataBase::setComponentIDList(QList<int> ids)
+	void ModelDataBase::setComponentIDList(const QList<int>& ids)
+	{		
+		_ComponentIDList = ids;
+	}
+
+	void ModelDataBase::addComponentID(int cpId)
 	{
-		for (int id : ids)
-		{
-			if (!_ComponentIDList.contains(id))
-				_ComponentIDList.append(id);
-		}
+ 		if (!_ComponentIDList.contains(cpId))
+			_ComponentIDList.append(cpId);
 	}
 
     QList<int> ModelDataBase::getMeshSetList()
@@ -354,12 +356,18 @@ namespace ModelData
 		return ids;
     }
 
-    void ModelDataBase::setMeshKernelList(QList<int> k)
+    void ModelDataBase::setMeshKernelList(const QList<int>& kids)
     {
-        _meshKernalIDList = k;
+		_meshKernalIDList = kids;
     }
 
-    QList<int> ModelDataBase::getMeshKernalList()
+	void ModelDataBase::addMeshKernalId(const int kId)
+	{
+		if (!_meshKernalIDList.contains(kId))
+			_meshKernalIDList.append(kId);
+	}
+
+	QList<int>& ModelDataBase::getMeshKernalList()
     {
         return _meshKernalIDList;
     }
@@ -517,7 +525,7 @@ namespace ModelData
 		DataBase::removeParameterGroup(g);
 	}
 
-	QList<int> ModelDataBase::getGeometryList()
+	QList<int>& ModelDataBase::getGeometryList()
     {
         return _geometryList;
     }
@@ -546,7 +554,7 @@ namespace ModelData
         DataBase::generateParaInfo();
     }
 
-	QList<int>& ModelDataBase::getComponentIDList()
+	const QList<int>& ModelDataBase::getComponentIDList()
 	{
 		return _ComponentIDList;
 	}

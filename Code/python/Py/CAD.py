@@ -1103,8 +1103,59 @@ class FillHole:
 
     def edit(self):
         self.create()				
+class RemoveSurface:
+    def __init__(self):
+        self.faces=dict()
+        self.editID = -1
+
+    def appendFace(self, geoset, index):
+        self.faces.setdefault(geoset, set()).add(index)
+
+    def setEditID(self,id):
+        self.editID = id
+
+    def create(self):
+         keyList = self.faces.keys()
+         strcom = ""
+         for key in keyList:
+             setstr = ""
+             values = self.faces.get(key)
+             for v in values:
+                 setstr = setstr + str(v) + ","
+             setstr =  str(key) +  ":" + setstr[:-1]
+             strcom = strcom + setstr+";"
+         strcom = strcom[:-1]
+         facestr = bytes(strcom, encoding='utf-8')
+         command.MakeRemoveSurface(facestr, c_int(self.editID))
+
+    def edit(self):
+        self.create()				
+				
+class FillGap:
+
+    def setEditID(self, id):
+        self.editID = id
 		
+    def setFillGapType(self,type):
+        self.fillgaptype=type
 		
+    def setIndexOfShape1(self,set1,body1Index):
+        self.set1=set1
+        self.body1Index=body1Index
+		
+    def setIndexOfShape2(self,set2,body2Index):
+        self.set2=set2
+        self.body2Index=body2Index
+		
+    def create(self):
+        typestr = bytes(self.fillgaptype, encoding='utf-8')
+        command.CreateFillGap(typestr,c_int(self.set1),c_int(self.body1Index),c_int(self.set2),c_int(self.body2Index))
+        del self
+
+    def edit(self):
+        typestr = bytes(self.fillgaptype, encoding='utf-8')
+        command.EditFillGap(c_int(self.editID),typestr,c_int(self.set1),c_int(self.body1Index),c_int(self.set2),c_int(self.body2Index))
+        del self		
 		
 		
 		

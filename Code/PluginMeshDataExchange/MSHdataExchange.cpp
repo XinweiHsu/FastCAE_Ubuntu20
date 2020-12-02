@@ -14,13 +14,13 @@
 
 namespace MeshData
 {
-	MSHdataExchange::MSHdataExchange(const QString& fileName, MeshOperation operation, GUI::MainWindow *mw, int KernalId) :
+	MSHdataExchange::MSHdataExchange(const QString& fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId) :
 	//	_fileName(fileName),
 		_operation(operation), 
 		_meshData(MeshData::getInstance()),
 		_totalNumber(0),
 		MeshThreadBase(fileName, operation, mw),
-		_writeFileKid(KernalId)
+		_modelId(modelId)
 	{
 		_fileName = fileName;
 		_file = new QFile(_fileName);
@@ -87,7 +87,7 @@ namespace MeshData
 
 	bool MSHdataExchange::write()
 	{
-		if (_writeFileKid)	return false;
+		if (_modelId)	return false;
 	}
 
 	void MSHdataExchange::run()

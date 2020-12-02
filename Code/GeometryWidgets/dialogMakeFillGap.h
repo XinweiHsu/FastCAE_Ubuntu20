@@ -20,7 +20,6 @@ namespace GeometryWidget
 		
 	private slots:
 	
-	
 		void on_geoSelectCurve_clicked();
 		void on_geoSelectSurface_1_clicked();
 		void on_geoSelectSurface_clicked();

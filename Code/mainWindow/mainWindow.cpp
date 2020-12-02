@@ -22,7 +22,7 @@
 #include "MainWidgets/projectSolveDialog.h"
 #include "MainWidgets/DialogCreateSet.h"
 #include "MainWidgets/DialogCreateGeoComponent.h"
-#include "MainWidgets/DialogVTKTransform.h"
+#include "MainWidgets/DialogVTkTransform.h"
 #include "MainWidgets/preWindow.h"
 #include "GeometryWidgets/dialogSketchPlane.h"
 #include "meshData/meshSingleton.h"
@@ -460,7 +460,6 @@ namespace GUI
 
 	void MainWindow::on_importMesh()
 	{
-		QString workDir = Setting::BusAPI::instance()->getWorkingDir();	
 		QStringList list = IO::IOConfigure::getMeshImporters();
 		if (list.isEmpty())
 		{
@@ -478,6 +477,7 @@ namespace GUI
 			modelID = senderName.right(1).toInt();
 		}
 
+		QString workDir = Setting::BusAPI::instance()->getWorkingDir();
 		QFileDialog dlg(this, tr("Import Mesh"), workDir, suffixes);
 		dlg.setAcceptMode(QFileDialog::AcceptOpen);
 		dlg.setFileMode(QFileDialog::ExistingFile);		
@@ -516,32 +516,44 @@ namespace GUI
 
 	void MainWindow::on_exportMesh()
 	{	
-		QString workDir = Setting::BusAPI::instance()->getWorkingDir();
-		QStringList list = IO::IOConfigure::getMeshExporters();
+		QStringList list = IO::IOConfigure::getMeshImporters();
 		if (list.isEmpty())
 		{
 			QMessageBox::warning(this, tr("Warning"), tr("The MeshPlugin is not installed !"));
 			return;
 		}
+
+		if (MeshData::MeshData::getInstance()->getKernalCount() == 0)
+		{
+			QMessageBox::warning(this, tr("Warning"), tr("No one has any grid!"));
+			return;
+		}
+
 		qSort(list.begin(), list.end());
 		QString suffixes = list.join(";;");
-
-		QFileDialog dlg(this, tr("Export Mesh"), workDir ,suffixes);
+		QString senderName = sender()->objectName();
+		int modelID = -1;
+		if (senderName.contains("Only INP_"))
+		{
+			suffixes = list.at(0);
+			modelID = senderName.right(1).toInt();
+		}
+		QString workDir = Setting::BusAPI::instance()->getWorkingDir();
+		QFileDialog dlg(this, tr("Export Mesh"), workDir, suffixes);
 		dlg.setAcceptMode(QFileDialog::AcceptSave);
 		if (dlg.exec() != QFileDialog::FileName)    return;
 
 		QString aSuffix = dlg.selectedNameFilter();
 		QString aFileName = dlg.selectedFiles().join(",");
 		if (aFileName.isEmpty())	return;
-		
-		QString pyCode = QString("MainWindow.exportMesh(\"%1\",\"%2\")").arg(aFileName).arg(aSuffix);		
+		QString pyCode = QString("MainWindow.exportMesh(\"%1\",\"%2\",%3)").arg(aFileName).arg(aSuffix).arg(modelID);
 		Py::PythonAagent::getInstance()->submit(pyCode);
 	}
 
-	void MainWindow::importMesh(QString fileName ,QString suffix, int modelId)
-	{
-		_signalHandler->importMesh(fileName, suffix, modelId);
-	}
+// 	void MainWindow::importMesh(QString fileName ,QString suffix, int modelId)
+// 	{
+// 		_signalHandler->importMesh(fileName, suffix, modelId);
+// 	}
 
 	void MainWindow::importMeshDataset(vtkDataSet* dataset)
 	{
@@ -863,7 +875,7 @@ namespace GUI
 			return false;
 
 		QMessageBox::StandardButton result =
-			QMessageBox::information(this, tr("Do you need to load?"),
+			QMessageBox::warning(this, tr("Do you need to load?"),
 			tr("The program quit with an exception before, do you want to reload the contents?"),
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 

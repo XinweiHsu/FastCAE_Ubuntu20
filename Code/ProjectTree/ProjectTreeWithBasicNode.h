@@ -55,7 +55,7 @@ namespace ProjectTree
 		virtual void updateMonitorTree();
 		virtual void updatePostTree();
 		//获取关联的组件ID(包括网格组件和几何组件)
-		QList<int>& getComponentIDList();
+		const QList<int>& getComponentIDList();
 		//通过组件ID删除算例中的项，并更新树
 		void removeCaseComponentByID(int);
 		//通过组件ID重命名算例中的项，并更新树
@@ -78,6 +78,8 @@ namespace ProjectTree
 		virtual void counterContextMenu(QMenu* menu);
 		virtual void vectorContextMenu(QMenu* menu);
 		virtual DataProperty::DataBase* getCurrentItemData();
+
+		//bool readInForm();
 
 	protected slots:
 	    virtual void importGeometry();

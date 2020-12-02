@@ -19,12 +19,14 @@
 #include <QDebug>
 
 namespace MeshData{
-	PDBdataExchange::PDBdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int KernalId) :
-		MeshThreadBase(fileName, operation, mw), _fileName(fileName), _operation(operation), _writeFileKid(KernalId), 
+	PDBdataExchange::PDBdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId) :
+		MeshThreadBase(fileName, operation, mw), 
+		_fileName(fileName), 
+		_operation(operation), 
+		_modelId(modelId),
 		_meshData(MeshData::getInstance())
 	{
 	}
-
 
 	PDBdataExchange::~PDBdataExchange()
 	{

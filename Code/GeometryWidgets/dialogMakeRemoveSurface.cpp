@@ -34,7 +34,7 @@ namespace GeometryWidget
 		this->translateButtonBox(_ui->buttonBox);
 		_isEdit = true;
 		_editSet = set;
-		this->setWindowTitle(tr("Edit Hole"));
+		this->setWindowTitle(tr("Edit RemoveSurface"));
 		if (_editSet == nullptr) return;
 		Geometry::GeometryModelParaBase* pb = _editSet->getParameter();
 		Geometry::GeometryParaMakeRemoveSurface* p = dynamic_cast<Geometry::GeometryParaMakeRemoveSurface*>(pb);

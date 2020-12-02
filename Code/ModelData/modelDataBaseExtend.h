@@ -130,10 +130,14 @@ namespace ModelData
 		//获取三维渲染窗口
 		Post::Post3DWindowInterface* getPost3DWindow();
 
+		void bindInpMaterialIds(const QList<int>&);
+		const QList<int>& getInpMaterialIds();
+
 	protected:
 		void registerObserver();
 		
 	protected:
+		QList<int> _inpMaterIds;
 		QHash<int, int> _setMaterial{};
 		QStringList _reportList{};
 		QHash<int, DataProperty::DataBase*> _configData{};
@@ -147,7 +151,6 @@ namespace ModelData
 
 		Post::Post2DWindowInterface* _post2DWindow{};
 		Post::Post3DWindowInterface* _post3DWindow{};
-	
 	};
 
 

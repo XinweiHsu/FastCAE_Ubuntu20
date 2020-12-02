@@ -273,6 +273,9 @@ namespace MainWidget
 			const int modelId = _curretnItem->data(0, Qt::UserRole).toInt();
 			action->setObjectName(QString("Only INP_%1").arg(modelId));
 
+			action = pop_menu.addAction(tr("Export INP File"));
+			connect(action, SIGNAL(triggered()), _mainWindow, SLOT(on_exportMesh()));
+			action->setObjectName(QString("Only INP_%1").arg(modelId));
 			int id = item->data(0, Qt::UserRole).toInt();
 			auto tree = _idTreeHash.value(id);
 			if (tree != nullptr)

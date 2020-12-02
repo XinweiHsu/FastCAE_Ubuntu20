@@ -57,7 +57,7 @@ namespace ModuleBase
 		emit setFinishedStatus(100);
 		//_thread.sleep(5);
 		//_thread->sleep(5);
-		emit threadWait(5);
+		//emit threadWait(5);
 
 		_process->setAutoClose(true);
 		emit setFinishedStatus(100);

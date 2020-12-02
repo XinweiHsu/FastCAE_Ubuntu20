@@ -178,7 +178,7 @@ namespace Gmsh
 		_ui->geoSelectSurface->setVisible(false);
 		_pointWidget->setVisible(true);
 
-		_ui->label->setText("Value:");
+		_ui->label->setText(tr("Value:"));
 		_ui->backgroundField->setVisible(false);
 
 		clearInterfaceData();
@@ -274,10 +274,10 @@ namespace Gmsh
 		_ui->panel->setVisible(false);
 		_ui->geoSelectSurface->setVisible(false);
 		_pointWidget->setVisible(true);
-		_ui->label->setText("Radius:");
-		_ui->label_2->setText("Length:");
-		_ui->label_3->setText("VIn:");
-		_ui->label_4->setText("VOut:");
+		_ui->label->setText(tr("Radius:"));
+		_ui->label_2->setText(tr("Length:"));
+		_ui->label_3->setText(tr("VIn:"));
+		_ui->label_4->setText(tr("VOut:"));
 		_ui->backgroundField->setVisible(true);
 
 		clearInterfaceData();
@@ -451,13 +451,13 @@ namespace Gmsh
 		_ui->panel->setVisible(false);
 		_ui->geoSelectSurface->setVisible(false);
 		_pointWidget->setVisible(true);
-		_ui->label->setText("RadiusIn 1:");
-		_ui->label_2->setText("RadiusOut 1:");
-		_ui->label_3->setText("RadiusIn 2:");
-		_ui->label_4->setText("RadiusOut 2:");
-		_ui->label_5->setText("Length:");
-		_ui->label_6->setText("VIn:");
-		_ui->label_7->setText("VOut:");
+		_ui->label->setText(tr("RadiusIn 1:"));
+		_ui->label_2->setText(tr("RadiusOut 1:"));
+		_ui->label_3->setText(tr("RadiusIn 2:"));
+		_ui->label_4->setText(tr("RadiusOut 2:"));
+		_ui->label_5->setText(tr("Length:"));
+		_ui->label_6->setText(tr("VIn:"));
+		_ui->label_7->setText(tr("VOut:"));
 		_ui->backgroundField->setVisible(true);
 
 		clearInterfaceData();

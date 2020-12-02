@@ -35,7 +35,7 @@
   <customwidget>
    <class>QVTKOpenGLNativeWidget</class>
    <extends>QWidget</extends>
-   <header>QVTKOpenGLNativeWidget.h</header>
+   <header>qvtkopenglnativewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

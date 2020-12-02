@@ -1671,9 +1671,9 @@ namespace MainWidget
 		_preWindow->reRender();
 	}
 
-	QMultiHash<Geometry::GeometrySet*, int> GeometryViewProvider::getGeoSelectItems()
+	QMultiHash<Geometry::GeometrySet*, int>* GeometryViewProvider::getGeoSelectItems()
 	{
-		return _selectItems;
+		return &_selectItems;
 	}
 
 	void GeometryViewProvider::setGeoSelectItems(QMultiHash<Geometry::GeometrySet*, int> items)

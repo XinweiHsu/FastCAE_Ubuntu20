@@ -69,9 +69,10 @@
     <message>
         <location line="+85"/>
         <location line="+43"/>
-        <location line="+19"/>
-        <location line="+49"/>
-        <location line="+183"/>
+        <location line="+18"/>
+        <location line="+56"/>
+        <location line="+6"/>
+        <location line="+190"/>
         <location line="+110"/>
         <location line="+8"/>
         <location line="+104"/>
@@ -79,13 +80,13 @@
         <translation>警告</translation>
     </message>
     <message>
-        <location line="-516"/>
-        <location line="+412"/>
+        <location line="-535"/>
+        <location line="+431"/>
         <source>Do you want to save current data ?</source>
         <translation>是否保存当前数据？</translation>
     </message>
     <message>
-        <location line="-405"/>
+        <location line="-424"/>
         <location line="+28"/>
         <source>Project file(*.diso);;Project file(*.xml)</source>
         <translation>工程文件(*.diso);;工程文件(*.xml)</translation>
@@ -106,13 +107,13 @@
         <translation>几何信息将会丢失，是否继续？</translation>
     </message>
     <message>
-        <location line="+19"/>
-        <location line="+49"/>
+        <location line="+18"/>
+        <location line="+56"/>
         <source>The MeshPlugin is not installed !</source>
         <translation>没有安装网格插件!</translation>
     </message>
     <message>
-        <location line="-42"/>
+        <location line="-41"/>
         <source>Import Mesh</source>
         <translation>导入网格</translation>
     </message>
@@ -122,12 +123,17 @@
         <translation>导出几何</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+19"/>
+        <source>No one has any grid!</source>
+        <translation>没有网格！</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Export Mesh</source>
         <translation>导出网格</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+42"/>
         <source>Import Geometry</source>
         <translation>导入几何</translation>
     </message>
@@ -142,8 +148,8 @@
         <translation>程序退出前出现异常，是否要重新加载内容?</translation>
     </message>
     <message>
-        <location line="-495"/>
-        <location line="+403"/>
+        <location line="-514"/>
+        <location line="+422"/>
         <source>Recent</source>
         <translation>最近文件</translation>
     </message>
@@ -161,10 +167,6 @@
         <location line="+50"/>
         <source>Do you need to load?</source>
         <translation>是否需要重新加载？</translation>
-    </message>
-    <message>
-        <source>The program quitted last time with an exception, do you need to reload the contents?</source>
-        <translation type="vanished">程序上次异常退出，是否需要重新加载内容?</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -190,8 +192,8 @@
 <context>
     <name>GUI::SignalHandler</name>
     <message>
-        <location filename="../../mainWindow/signalHandler.cpp" line="+343"/>
-        <location line="+357"/>
+        <location filename="../../mainWindow/signalHandler.cpp" line="+365"/>
+        <location line="+342"/>
         <location line="+13"/>
         <location line="+13"/>
         <location line="+14"/>
@@ -209,11 +211,13 @@
         <location line="+13"/>
         <location line="+14"/>
         <location line="+13"/>
+        <location line="+13"/>
+        <location line="+12"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location line="-709"/>
+        <location line="-719"/>
         <source>%1 is Solving , Please wait...</source>
         <translation>%1正在求解，请等待…</translation>
     </message>
@@ -228,7 +232,7 @@
         <translation>网格已生成“%1”</translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+278"/>
         <location line="+13"/>
         <location line="+13"/>
         <location line="+14"/>
@@ -246,6 +250,8 @@
         <location line="+13"/>
         <location line="+14"/>
         <location line="+13"/>
+        <location line="+13"/>
+        <location line="+12"/>
         <source>Open PreWindow First!</source>
         <translation>请先打开前处理窗口！</translation>
     </message>
@@ -261,7 +267,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../mainWindow/MainWindow.ui" line="+650"/>
+        <location filename="../../mainWindow/mainWindow.ui" line="+650"/>
         <source>Solve</source>
         <translation>求解</translation>
     </message>
@@ -609,7 +615,7 @@
     <message>
         <location line="+12"/>
         <source>Create Set</source>
-        <translation type="unfinished">创建组件&amp;&amp;寻找共面点或单元</translation>
+        <translation>创建组件&amp;&amp;寻找共面点或单元</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -919,31 +925,27 @@
         <translation>网格过滤</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>FillHole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>RemoveSurface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>FillGap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>transform</source>
-        <translation>变形</translation>
+        <location line="+15"/>
+        <source>Mesh Modeling</source>
+        <translation>网格建模</translation>
     </message>
     <message>
-        <source>coplanar</source>
-        <translation type="vanished">寻找共面点或单元</translation>
-    </message>
-    <message>
-        <location line="-992"/>
+        <location line="-1008"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>

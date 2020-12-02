@@ -22,6 +22,8 @@
 #include "geometryParaGeoSplitter.h"
 #include "geometryParaMakeFillHole.h"
 #include "geometryParaMakeRemoveSurface.h"
+#include "geometryParaMakeFillGap.h"
+
 
 namespace Geometry
 {
@@ -66,6 +68,7 @@ namespace Geometry
 			case GeometryParaSplitter:stype = "GeoSplitter"; break;
 			case GeometryParaFillHole:stype = "FillHole"; break;
 			case GeometryParaRemoveSurface:stype = "RemoveSurface"; break;
+			case GeometryParaFillGap:stype = "FillGap"; break;
 			default: 
 				break;
 
@@ -100,6 +103,7 @@ namespace Geometry
 		else if (s == "GeoSplitter") p = new GeometryParaGeoSplitter;
 		else if (s == "FillHole") p = new GeometryParaMakeFillHole;
 		else if (s == "RemoveSurface") p = new GeometryParaMakeRemoveSurface;
+		else if (s == "FillGap") p = new GeometryParaMakeFillGap;
 		return p;
 	}
 

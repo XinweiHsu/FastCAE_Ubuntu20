@@ -678,4 +678,14 @@ namespace ModelData
 	{
 		return _post3DWindow;
 	}
+
+	void ModelDataBaseExtend::bindInpMaterialIds(const QList<int>& inpMaterIds)
+	{
+		_inpMaterIds = inpMaterIds;
+	}
+
+	const QList<int>& ModelDataBaseExtend::getInpMaterialIds()
+	{
+		return _inpMaterIds;
+	}
 }

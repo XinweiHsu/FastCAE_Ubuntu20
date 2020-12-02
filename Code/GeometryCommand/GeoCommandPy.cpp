@@ -25,6 +25,8 @@
 #include "GeometryCommand/GeoCommandMakeSweep.h"
 #include "GeometryCommand/GeoCommandGeoSplitter.h"
 #include "GeometryCommand/GeoCommandMakeFillHole.h"
+#include "GeometryCommand/GeoCommandMakeRemoveSurface.h"
+#include "GeometryCommand/GeoCommandFillGap.h"
 #include <QMap>
 #include <QPair>
 namespace Command
@@ -623,6 +625,71 @@ namespace Command
 			if (set != nullptr) c->setEditData(set);
 		}
 
+		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
+		if (!success) warning();
+	}
+
+	void GeometryCommandPy::MakeRemoveSurface(QMultiHash<Geometry::GeometrySet*, int> faces, int editID)
+	{
+		Command::CommandMakeRemoveSurface* c = new Command::CommandMakeRemoveSurface(_mainWindow, _preWindow);
+		c->setShapeList(faces);
+		if (editID > 0) 
+		{
+			Geometry::GeometrySet* set = Geometry::GeometryData::getInstance()->getGeometrySetByID(editID);
+			if (set != nullptr) c->setEditData(set);
+		}
+		
+		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
+		if (!success) warning();
+	}
+
+	void GeometryCommandPy::MakeFillGap(int type, int set1, int body1, int set2, int body2)
+	{
+		Geometry::GeometrySet* geo1 = Geometry::GeometryData::getInstance()->getGeometrySetByID(set1);
+		if (geo1 == nullptr) return;
+		Geometry::GeometrySet* geo2 = Geometry::GeometryData::getInstance()->getGeometrySetByID(set2);
+		if (geo2 == nullptr) return;
+		QPair <Geometry::GeometrySet*, int> solid1{ geo1, body1 };
+		QPair <Geometry::GeometrySet*, int> solid2{ geo2, body2 };
+		QList <	QPair <Geometry::GeometrySet*, int>> shapelist{};
+		shapelist.append(solid1); shapelist.append(solid2);
+
+		Command::CommandFillGap* c = new Command::CommandFillGap(_mainWindow, _preWindow);
+		c->setGapType(type);
+		switch (type)
+		{
+		case 0:c->setEdges(shapelist); break;
+		case 1:c->setFaces(shapelist); break;
+		case 2:c->setSolids(shapelist); break;
+		default:
+			break;
+		}
+		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
+		if (!success) warning();
+	}
+
+	void GeometryCommandPy::EditFillGap(Geometry::GeometrySet* set, int type, int set1, int body1, int set2, int body2)
+	{
+		Geometry::GeometrySet* geo1 = Geometry::GeometryData::getInstance()->getGeometrySetByID(set1);
+		if (geo1 == nullptr) return;
+		Geometry::GeometrySet* geo2 = Geometry::GeometryData::getInstance()->getGeometrySetByID(set2);
+		if (geo2 == nullptr) return;
+		QPair <Geometry::GeometrySet*, int> solid1{ geo1, body1 };
+		QPair <Geometry::GeometrySet*, int> solid2{ geo2, body2 };
+		QList <	QPair <Geometry::GeometrySet*, int>> shapelist{};
+		shapelist.append(solid1); shapelist.append(solid2);
+
+		Command::CommandFillGap* c = new Command::CommandFillGap(_mainWindow, _preWindow);
+		c->setEditData(set);
+		c->setGapType(type);
+		switch (type)
+		{
+		case 0:c->setEdges(shapelist); break;
+		case 1:c->setFaces(shapelist); break;
+		case 2:c->setSolids(shapelist); break;
+		default:
+			break;
+		}
 		bool success = Command::GeoComandList::getInstance()->executeCommand(c);
 		if (!success) warning();
 	}
@@ -1441,5 +1508,51 @@ void GEOMETRYCOMMANDAPI MakeFillHole(char* faces, int editID)
 	}
 
 	Command::GeometryCommandPy::MakeFillHole(shapeHash, editID);
+}
+
+void GEOMETRYCOMMANDAPI MakeRemoveSurface(char* faces, int editID)
+{
+	QString cface = QString(faces);
+
+	QStringList setInfos = cface.split(";");
+	QMultiHash<Geometry::GeometrySet*, int> shapeHash;
+	Geometry::GeometryData* data = Geometry::GeometryData::getInstance();
+	for (QString setinfo : setInfos)
+	{
+		QStringList setin = setinfo.split(":");
+		int setid = setin.at(0).toInt();
+		auto set = data->getGeometrySetByID(setid);
+		if (set == nullptr) continue;
+		QStringList edges = setin.at(1).split(",");
+		for (QString e : edges)
+		{
+			int index = e.toInt();
+			shapeHash.insert(set, index);
+		}
+	}
+
+	Command::GeometryCommandPy::MakeRemoveSurface(shapeHash, editID);
+}
+
+void GEOMETRYCOMMANDAPI CreateFillGap(char* type, int set1, int body1, int set2, int body2)
+{
+	QString str = QString(type);
+	int indextype{};
+	if (str == "Edge") indextype = 0;
+	else if (str == "Surface") indextype = 1;
+	else if (str == "Solid") indextype = 2;
+
+	Command::GeometryCommandPy::MakeFillGap(indextype, set1, body1, set2, body2);
+}
+
+void GEOMETRYCOMMANDAPI EditFillGap(int id, char*type, int set1, int body1, int set2, int body2)
+{
+	Geometry::GeometrySet* set = Geometry::GeometryData::getInstance()->getGeometrySetByID(id);
+	QString str = QString(type);
+	int indextype{};
+	if (str == "Edge") indextype = 0;
+	else if (str == "Surface") indextype = 1;
+	else if (str == "Solid") indextype = 2;
+	Command::GeometryCommandPy::EditFillGap(set, indextype, set1, body1, set2, body2);
 }
 

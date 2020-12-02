@@ -7,7 +7,7 @@
 #include <QHash>
 #include <QList>
 #include "moduleBase/ModuleType.h"
-#include <vtkPolyData.h>
+#include <vtkPolydata.h>
 #include <vtkActor.h>
 #include <vtkDataSetMapper.h>
 #include <vtkPolyDataMapper.h>

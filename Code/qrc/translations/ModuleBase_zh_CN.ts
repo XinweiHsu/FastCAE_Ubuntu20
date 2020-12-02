@@ -5,28 +5,38 @@
     <name>ComponentDialogBase</name>
     <message>
         <location filename="../../moduleBase/componentDialogBase.ui" line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_componentDialogBase.h" line="+122"/>
+        <location filename="../../moduleBase/release/qui/ui_componentDialogBase.h" line="+122"/>
         <source>Dialog</source>
         <translation>选择</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../moduleBase/debug/qui/ui_componentDialogBase.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_componentDialogBase.h" line="+1"/>
         <source>Available:</source>
         <translation>可选：</translation>
     </message>
     <message>
         <location line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_componentDialogBase.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_componentDialogBase.h" line="+1"/>
         <source>&gt;&gt;</source>
         <translatorcomment>导入</translatorcomment>
         <translation>&gt;&gt;</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_componentDialogBase.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_componentDialogBase.h" line="+1"/>
         <source>&lt;&lt;</source>
         <translatorcomment>导出</translatorcomment>
         <translation>&lt;&lt;</translation>
     </message>
     <message>
         <location line="+11"/>
+        <location filename="../../moduleBase/debug/qui/ui_componentDialogBase.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_componentDialogBase.h" line="+1"/>
         <source>Selected:</source>
         <translation>已选：</translation>
     </message>
@@ -35,41 +45,55 @@
     <name>Dialog</name>
     <message>
         <location filename="../../moduleBase/RandomWidget.ui" line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+237"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+237"/>
         <source>Dialog</source>
         <translation>选择</translation>
     </message>
     <message>
         <location line="+21"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+3"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+3"/>
         <source>Normal</source>
         <translatorcomment>随机分布</translatorcomment>
         <translation>随机分布</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Linearity</source>
         <translatorcomment>线性分布</translatorcomment>
         <translation>线性分布</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Gauss</source>
         <translatorcomment>高斯分布</translatorcomment>
         <translation>高斯分布</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Possion</source>
         <translatorcomment>泊松分布</translatorcomment>
         <translation>泊松分布</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Exponential</source>
         <translatorcomment>线性分布</translatorcomment>
         <translation>线性分布</translation>
     </message>
     <message>
         <location line="+12"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Random Para</source>
         <translatorcomment>分布参数</translatorcomment>
         <translation>分布参数</translation>
@@ -77,66 +101,90 @@
     <message>
         <location line="-53"/>
         <location line="+101"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="-7"/>
+        <location line="+11"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="-7"/>
+        <location line="+11"/>
         <source>Value</source>
         <translatorcomment>值类型</translatorcomment>
         <translation>值类型</translation>
     </message>
     <message>
         <location line="-95"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="-10"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="-10"/>
         <source>Single</source>
         <translatorcomment>单值</translatorcomment>
         <translation>单值</translation>
     </message>
     <message>
         <location line="+53"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+7"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+7"/>
         <source>Para1</source>
         <translatorcomment>参数1</translatorcomment>
         <translation>参数1</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Para2</source>
         <translatorcomment>参数2</translatorcomment>
         <translation>参数2</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Para Set</source>
         <translatorcomment>范围设置</translatorcomment>
         <translation>范围设置</translation>
     </message>
     <message>
         <location line="+29"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+2"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+2"/>
         <source>Para From:</source>
         <translatorcomment>起始值</translatorcomment>
         <translation>起始值：</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Para To:</source>
         <translatorcomment>终止值</translatorcomment>
         <translation>终止值：</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Para Number:</source>
         <translatorcomment>随机数个数</translatorcomment>
         <translation>随机数个数：</translation>
     </message>
     <message>
         <location line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Apply</source>
         <translatorcomment>应用</translatorcomment>
         <translation>应用</translation>
     </message>
     <message>
         <location line="+32"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Ok</source>
         <translatorcomment>确定</translatorcomment>
         <translation>确定</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../moduleBase/debug/qui/ui_RandomWidget.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_RandomWidget.h" line="+1"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -145,6 +193,8 @@
     <name>Graph3DWindow</name>
     <message>
         <location filename="../../moduleBase/graph3DWindow.ui" line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_graph3DWindow.h" line="+47"/>
+        <location filename="../../moduleBase/release/qui/ui_graph3DWindow.h" line="+47"/>
         <source>Graph3D</source>
         <translation>三维绘图</translation>
     </message>
@@ -153,6 +203,8 @@
     <name>MessageWindow</name>
     <message>
         <location filename="../../moduleBase/messageWindowBase.ui" line="+20"/>
+        <location filename="../../moduleBase/debug/qui/ui_messageWindowBase.h" line="+75"/>
+        <location filename="../../moduleBase/release/qui/ui_messageWindowBase.h" line="+75"/>
         <source>Console</source>
         <translation>控制台</translation>
     </message>
@@ -373,11 +425,15 @@
     <name>ProcessBar</name>
     <message>
         <location filename="../../moduleBase/processBar.ui" line="+14"/>
+        <location filename="../../moduleBase/debug/qui/ui_processBar.h" line="+91"/>
+        <location filename="../../moduleBase/release/qui/ui_processBar.h" line="+91"/>
         <source>ProcessBar</source>
         <translation>求解进程</translation>
     </message>
     <message>
         <location line="+8"/>
+        <location filename="../../moduleBase/debug/qui/ui_processBar.h" line="+1"/>
+        <location filename="../../moduleBase/release/qui/ui_processBar.h" line="+1"/>
         <source>name</source>
         <translation>标签</translation>
     </message>
@@ -386,6 +442,8 @@
     <name>ProcessWindow</name>
     <message>
         <location filename="../../moduleBase/ProcessWindowBase.ui" line="+20"/>
+        <location filename="../../moduleBase/debug/qui/ui_ProcessWindowBase.h" line="+83"/>
+        <location filename="../../moduleBase/release/qui/ui_ProcessWindowBase.h" line="+83"/>
         <source>Process</source>
         <translation>进程</translation>
     </message>

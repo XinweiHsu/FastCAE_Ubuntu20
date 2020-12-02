@@ -6,7 +6,7 @@
 #include <QHash>
 #include <QList>
 #include "moduleBase/ModuleType.h"
-#include <vtkPolyData.h>
+#include <vtkPolydata.h>
 #include <TopoDS.hxx>
 
 class TopoDS_Shape;
@@ -41,7 +41,7 @@ namespace MainWidget
 		void updateGeoActors();
 		void updateGraphOption();
 		void updateDiaplayStates(Geometry::GeometrySet* s, bool visibility);
-		QMultiHash<Geometry::GeometrySet*, int> getGeoSelectItems();
+		QMultiHash<Geometry::GeometrySet*, int>* getGeoSelectItems();
 		void setGeoSelectItems(QMultiHash<Geometry::GeometrySet*, int> items);
 		//
 		bool  findSelectPolydata(vtkActor * ac, QVector<double*> points, vtkPolyData* &findPolydata);

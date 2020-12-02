@@ -220,7 +220,7 @@ namespace Command
 		Standard_Boolean bRunParallel = Standard_True;
 		aBuilder.SetRunParallel(bRunParallel);
 		//设置模糊值（默认为Precision :: Confusion（））  
-		Standard_Real aFuzzyValue = 1e-1;
+		Standard_Real aFuzzyValue = 1e-5;
 		aBuilder.SetFuzzyValue(aFuzzyValue);
 		//设置安全处理模式（默认为false）
 		Standard_Boolean bSafeMode = Standard_True;

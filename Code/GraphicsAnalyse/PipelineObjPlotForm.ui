@@ -52,7 +52,7 @@
   <customwidget>
    <class>QVTKOpenGLNativeWidget</class>
    <extends>QWidget</extends>
-   <header location="global">QVTKOpenGLNativeWidget.h</header>
+   <header location="global">qvtkopenglnativewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

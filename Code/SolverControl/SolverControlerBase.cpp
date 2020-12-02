@@ -43,15 +43,19 @@ namespace SolverControl
 	{
 		QString solverPath = _solver->getExePath();
 		QFileInfo info(solverPath);
+		int id = _model->getID();
+		
 		if ((!info.exists()) || (!info.isFile()))
 		{
 			QMessageBox::warning(nullptr, tr("Warning"), tr("Solver Path Error! Solve Path : %1").arg(solverPath));
+			emit processFinish(id);
 			return;
 		}
 		bool ok = preProcess();
 		if (!ok)
 		{
 			QMessageBox::warning(nullptr, tr("Warning"), tr("Input file write failed !"));
+			emit processFinish(id);
 			return;
 		}
 
@@ -136,6 +140,11 @@ namespace SolverControl
 	void SolverControlBase::stopSolver(QWidget* w)
 	{
 		if (w != _processBar) return;
+
+		int id = -1;
+		if(_model != nullptr)
+			id = _model->getID();
+		emit removeSolver(id);
 		if (!_processFinished)
 		{
 			_process.kill();
@@ -233,12 +242,32 @@ namespace SolverControl
 		}
 	}
 
+	void SolverControlBase::setSolveArgs(QString arg)
+	{
+		_args = arg;
+	}
+
+	void SolverControlBase::startSolverClear()
+	{
+		_solveOnly = true;
+		_processBar = new ModuleBase::ProcessBar(_mainWindow, _description, false);
+		QString solverPath = _solver->getExePath();
+
+		_process.start(solverPath, QStringList(_args));
+
+		emit solverStarted(_processBar);
+
+	}
+
 	void SolverControlBase::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 	{
 		Q_UNUSED(exitCode);
 
 		_processFinished = true;
-		int id = _model->getID();
+
+		int id = -1;
+		if(_model != nullptr)
+			id = _model->getID();
 		emit processFinish(id);
 		
 

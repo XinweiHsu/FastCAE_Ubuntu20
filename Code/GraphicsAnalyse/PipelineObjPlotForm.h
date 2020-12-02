@@ -331,6 +331,7 @@ private:
 	QMutex plot_mutex;
 	Ui::PipelineObjPlotForm *ui;
 
+	vtkRenderWindow* renderWindow{};
 	vtkSmartPointer<vtkRenderer> renderer;
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor;
 	MyInteractorStyle* mouse_style; //vtkInteractorStyleTrackballCamera* mouse_style;

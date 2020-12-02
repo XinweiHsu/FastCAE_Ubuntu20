@@ -2,12 +2,17 @@
 #define _INPDATAEXCHANGE_H_
 
 #include "meshDataExchangePlugin.h"
-#include <QHash>
 #include "MeshThreadBase.h"
+#include <QHash>
 
 class QTextStream;
 class vtkUnstructuredGrid;
 class vtkDataSet;
+
+namespace ModelData
+{
+	class ModelDataBaseExtend;
+}
 
 namespace MeshData
 {
@@ -16,7 +21,7 @@ namespace MeshData
 	class MESHDATAEXCHANGEPLUGINAPI INPdataExchange :public MeshThreadBase
 	{
 	public:
-		INPdataExchange(const QString &filename, MeshOperation operation, GUI::MainWindow *mw ,int modelId = -1, int writeFileKid = -1);
+		INPdataExchange(const QString &filename, MeshOperation operation, GUI::MainWindow *mw ,int modelId = -1);
 		~INPdataExchange();
 
 		void run();
@@ -26,16 +31,23 @@ namespace MeshData
 		void readLine(QString &line);
 		bool readNodes(vtkUnstructuredGrid* g, QString &line);
 		bool readElements(vtkUnstructuredGrid* g, QString &line);
-		bool readNSet(QString &line);
-		bool readElSet(QString &line);
-		bool readMaterial(QString &line);
-		bool readBoundary(QString &line);
+		bool readNSet(QString &line, QList<int>& inpSetIds);
+		bool readElSet(QString &line, QList<int>& inpSetIds);
+		bool readMaterial(QString &line, QStringList& materialName, QStringList& density, QStringList& elastic);
+		bool readBoundary(QString &line, QStringList& bcSetIds, QStringList& bcName, QStringList& bcType, QList<double>& displacement, QList<double>& rotation);
 
 	private:
-		void addINPComponents();
-		void addINPMaterials();
-		void addINPBCs();
-		void clearString();
+		void addINPComponents(const QList<int>&);
+		void addINPMaterials(const QStringList&, const QStringList&, const QStringList&);
+		void addINPBCs(const QStringList& bcSetIds, const QStringList& bcName, const QStringList& bcType, const QList<double>& displacement, const QList<double>& rotation);
+
+		void writePoint(vtkDataSet* data);
+		void writeCell(vtkDataSet* data);
+		void writeComponent(int kId);
+		void writeMaterial();
+		void writeBoundary();
+		void endsWithGEN(QString& inpSetName, QString& qSet, int head, int tail);
+		void notEndsWithGEN(QString& inpSetName, QString& qSet, int nMember, const QList<int>& members);
 
 	private:
 		GUI::MainWindow* _mw;
@@ -46,19 +58,8 @@ namespace MeshData
 		MeshData* _meshData{};
 		QHash<int, int> _nodeIDIndex{};
 		QHash<int, int> _elemIDIndex{};
-		int _writeFileKid;
 		int _modelId;
-
-		QList<int> _setIds;
-		QStringList _materialName;
-		QStringList _density;
-		QStringList _elastic;
-
-		QStringList _bcSetIds;
-		QStringList _bcName;
-		QStringList _bcType;
-		QList<double> _displacement;
-		QList<double> _rotation;
+		ModelData::ModelDataBaseExtend* _Case{};
 	};
 }
 #endif

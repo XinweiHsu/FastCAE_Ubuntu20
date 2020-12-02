@@ -94,7 +94,7 @@ namespace Geometry
 		QDomElement id2ele = node2idList.at(0).toElement();
 		QString s2id = id2ele.text();
 		int id2 = s2id.toInt();
-		Geometry::GeometrySet* set2 = _geoData->getGeometrySetByID(id);
+		Geometry::GeometrySet* set2 = _geoData->getGeometrySetByID(id2);
 		if (set2 == nullptr) return;
 
 		QDomNodeList indexList2 = e->elementsByTagName("ShapeIndex2");

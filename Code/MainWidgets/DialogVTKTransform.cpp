@@ -2,8 +2,8 @@
 #include "ui_DialogVTKTransform.h"
 #include "ui_DialogSelectComponents.h"
 #include "python/PyAgent.h"
-#include "meshData/meshSingleton.h"
-#include "meshData/meshSet.h"
+#include "meshdata/meshSingleton.h"
+#include "meshdata/meshSet.h"
 #include <QMenu>
 #include <QDebug>
 
@@ -17,7 +17,7 @@ MainWidget::DialogVTKTransform::DialogVTKTransform(GUI::MainWindow* parent) :
 {
 	_ui->setupUi(this);
 	_ui->geoSelectPoint->setToolTip(tr("Clicked Button Selected Components"));
-	setWindowTitle(tr("VTKData Transform"));
+	setWindowTitle(tr("Mesh Modeling"));
 	_ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	disabledCustomRotateAxisSlot();

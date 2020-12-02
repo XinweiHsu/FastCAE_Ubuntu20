@@ -13,8 +13,8 @@
 #include "meshData/meshSet.h"
 //#include "meshData/setMember.h"
 #include "GeometryCommand/GeoCommandList.h"
-#include "geometry/GeoComponent.h"
-#include "geometry/geometryData.h"
+#include "Geometry/GeoComponent.h"
+#include "Geometry/geometryData.h"
 #include "IO/vtkDataRelated.h"
 #include "meshData/meshKernal.h"
 #include "vtkDataSet.h"
@@ -55,7 +55,7 @@ namespace GUI
 		emit _mainWindow->clearDataSig();
 	}
 
-	void MainWindowPy::importMesh(char* f,char* s, int modelId)
+	void MainWindowPy::importMesh(char* f, char* s, int modelId)
 	{
 		QString file(f);
 		QString suffix(s);
@@ -64,11 +64,11 @@ namespace GUI
 		//_pyAgent->unLock();
 	}
 
-	void MainWindowPy::exportMesh(char* f,char* s)
+	void MainWindowPy::exportMesh(char* f, char* s, int modelId)
 	{
 		QString file(f);
 		QString suffix(s);
-		emit _signalHander->exportMeshPySig(file,s);
+		emit _signalHander->exportMeshPySig(file, s, modelId);
 	}
 
 	void MainWindowPy::importGeometry(char* f)
@@ -1402,9 +1402,9 @@ void importMesh(char* f,char* s,int modelId)
 	GUI::MainWindowPy::importMesh(f, s, modelId);
 }
 
-void exportMesh(char* f, char* s)
+void exportMesh(char* f, char* s, int modelId)
 {
-	GUI::MainWindowPy::exportMesh(f,s);
+	GUI::MainWindowPy::exportMesh(f, s, modelId);
 }
 
 void importGeometry(char* f)

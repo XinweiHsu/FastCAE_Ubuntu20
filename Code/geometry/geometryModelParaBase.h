@@ -31,6 +31,7 @@ namespace Geometry
 		GeometryParaSplitter,
 		GeometryParaFillHole,
 		GeometryParaRemoveSurface,
+		GeometryParaFillGap,
 
 	};
 

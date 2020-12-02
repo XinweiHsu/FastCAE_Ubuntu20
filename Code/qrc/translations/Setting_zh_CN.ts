@@ -5,11 +5,15 @@
     <name>DialogWorkingDir</name>
     <message>
         <location filename="../../settings/DialogWorkingDir.ui" line="+14"/>
+        <location filename="../../settings/debug/qui/ui_DialogWorkingDir.h" line="+75"/>
+        <location filename="../../settings/release/qui/ui_DialogWorkingDir.h" line="+75"/>
         <source>Working Dir</source>
         <translation>设置工作目录</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../../settings/debug/qui/ui_DialogWorkingDir.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogWorkingDir.h" line="+1"/>
         <source>Working Dir：</source>
         <translation>工作目录:</translation>
     </message>
@@ -17,7 +21,7 @@
 <context>
     <name>EColorComboBox</name>
     <message>
-        <location filename="../../settings/ecolorcombobox.cxx" line="+19"/>
+        <location filename="../../settings/ecolorcombobox.cpp" line="+19"/>
         <location line="+205"/>
         <source>More ...</source>
         <translation>更多...</translation>
@@ -130,106 +134,148 @@
     <name>GraphOptionDialog</name>
     <message>
         <location filename="../../settings/DialogGraphOption.ui" line="+14"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+347"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+347"/>
         <source>Graph Option</source>
         <translation>绘图选项</translation>
     </message>
     <message>
         <location line="+21"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
         <location line="+13"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+12"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+12"/>
         <source>Genreal Color</source>
         <translation>通用颜色设置</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="-11"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="-11"/>
         <source>Background(Top)</source>
         <translation>背景颜色（顶部）</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Background(Bottom)</source>
         <translation>背景颜色（底部）</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>HighLight Color</source>
         <translation>高亮颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Pre Highlight Color</source>
         <translation>预高亮颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Geometry Surface Color</source>
         <translation>几何面颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Geometry Curve Color</source>
         <translation>几何线颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Geometry Point Color</source>
         <translation>几何点颜色</translation>
     </message>
     <message>
         <location line="+68"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+4"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+4"/>
         <source> Transparency</source>
         <translation>透明度</translation>
     </message>
     <message>
         <location line="+69"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+4"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+4"/>
         <source>Geometry Point Size</source>
         <translation>几何点大小</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Geometry Curve Width</source>
         <translation>几何线宽度</translation>
     </message>
     <message>
         <location line="-137"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="-8"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="-8"/>
         <source>Mesh Face Color</source>
         <translation>网格面颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Mesh Edge Color</source>
         <translation>网格边颜色</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Mesh Node Color</source>
         <translation>网格节点颜色</translation>
     </message>
     <message>
         <location line="+92"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+7"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+7"/>
         <source>Scalar and Size</source>
         <translation>尺寸范围</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="-4"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="-4"/>
         <source>Mesh Node Size</source>
         <translation>网格节点大小</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../settings/debug/qui/ui_DialogGraphOption.h" line="+1"/>
+        <location filename="../../settings/release/qui/ui_DialogGraphOption.h" line="+1"/>
         <source>Mesh Edge Width</source>
         <translation>网格边宽度</translation>
     </message>

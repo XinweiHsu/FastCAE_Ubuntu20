@@ -5,16 +5,19 @@
     <name>AddBCDialog</name>
     <message>
         <location filename="../../ProjectTree/DialogAddBC.ui" line="+14"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogAddBC.h" line="+76"/>
         <source>Add BC</source>
         <translation>添加边界条件</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogAddBC.h" line="+1"/>
         <source>Set</source>
         <translation>组件</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogAddBC.h" line="+1"/>
         <source>BC Type</source>
         <translation>类型</translation>
     </message>
@@ -35,7 +38,7 @@
 <context>
     <name>ProjectTree::ProjectTreeWithBasicNode</name>
     <message>
-        <location filename="../../ProjectTree/ProjectTreeWithBasicNode.cpp" line="+84"/>
+        <location filename="../../ProjectTree/ProjectTreeWithBasicNode.cpp" line="+85"/>
         <location line="+60"/>
         <source>Set</source>
         <translation>组件</translation>
@@ -110,13 +113,13 @@
         <translation>导入组件</translation>
     </message>
     <message>
-        <location line="+388"/>
-        <location line="+463"/>
+        <location line="+390"/>
+        <location line="+473"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location line="-463"/>
+        <location line="-473"/>
         <source>This Set has been used, still remove?</source>
         <translation>网格组件正在被使用，确认移除？</translation>
     </message>
@@ -141,12 +144,12 @@
         <translation>单元矢量</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location line="+188"/>
         <source>File %1 is not exist</source>
         <translation>文件 %1 不存在</translation>
     </message>
     <message>
-        <location line="-893"/>
+        <location line="-905"/>
         <location line="+20"/>
         <source>Report</source>
         <translation>报告</translation>
@@ -186,16 +189,19 @@
     <name>RemoveReportDialog</name>
     <message>
         <location filename="../../ProjectTree/DialogRemoveReport.ui" line="+14"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogRemoveReport.h" line="+64"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogRemoveReport.h" line="+1"/>
         <source>Do you decide to remove the report？</source>
         <translation>确定删除此报告？</translation>
     </message>
     <message>
         <location line="+7"/>
+        <location filename="../../ProjectTree/debug/qui/ui_DialogRemoveReport.h" line="+1"/>
         <source>Delete file</source>
         <translation>删除文件</translation>
     </message>

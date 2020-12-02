@@ -44,30 +44,26 @@ namespace MainWidget
 
 	void CreateSetDialog::init()
 	{
-		QString type;
 		_model = _preWindow->getSelectModel();
 		_isGeo = (_model == ModuleBase::GeometryCurve || _model == ModuleBase::GeometrySurface || _model == ModuleBase::GeometryBody ||_model == ModuleBase::GeometryWinCurve || _model == ModuleBase::GeometryWinSurface || _model == ModuleBase::GeometryWinBody);
 		if (_isGeo)
 			_ui->checkBox->setCheckable(false);
 
-		switch (_model)
+		if (_model == ModuleBase::MeshNode || _model == ModuleBase::BoxMeshNode)
 		{
-		case ModuleBase::MeshNode:
 			_ui->typeComboBox->setCurrentIndex(0);
 			_ui->label_id->setText(tr("PointId : "));
 			_ui->typeComboBox->setEnabled(false);
-			type = "Node";
-			break;
-		case ModuleBase::MeshCell:
+		}
+		else if (_model == ModuleBase::MeshCell || _model == ModuleBase::BoxMeshCell)
+		{
 			_ui->typeComboBox->setCurrentIndex(1);
 			_ui->label_id->setText(tr("CellId : "));
 			_ui->typeComboBox->setEnabled(false);
-			type = "Element";
-			break;
-		default:
-			_ui->typeComboBox->setEnabled(true);
 		}
-		
+		else
+			_ui->typeComboBox->setEnabled(true);
+
 		//ModuleBase::SelectModel model = _preWindow->getSelectModel();
 		//bool ismesh = model == ModuleBase::MeshNode || model == ModuleBase::MeshCell || model == ModuleBase::BoxMeshNode || model == ModuleBase::BoxMeshCell;
 		//_ui->label_type->setVisible(!ismesh);
@@ -104,15 +100,14 @@ namespace MainWidget
 
 	QString CreateSetDialog::generateGeoIDs(QString type)
 	{
-		QStringList kidString;
-		QMultiHash<Geometry::GeometrySet*, int> selectgeo = _preWindow->getGeoSelectItems();		
+		auto selectgeo = _preWindow->getGeoSelectItems();		
 
 		TopoDS_Compound aRes;
 		BRep_Builder aBuilder;
 		aBuilder.MakeCompound(aRes);
 		bool empty = true;
 
-		QList<Geometry::GeometrySet*> geoList = selectgeo.uniqueKeys();
+		QList<Geometry::GeometrySet*> geoList = selectgeo->uniqueKeys();
 		for (Geometry::GeometrySet* set : geoList)
 		{
 			TopoDS_Shape* body = set->getShape();
@@ -137,7 +132,7 @@ namespace MainWidget
 			default: break;
 			}
 
-			QList<int> member = selectgeo.values(set);
+			QList<int> member = selectgeo->values(set);
 			for (int m : member)
 			{
 				if (m <0) continue;
@@ -153,6 +148,7 @@ namespace MainWidget
 		}
 		if (empty) return QString();
 		
+		QStringList kidString;
 		const int n = _meshData->getKernalCount();
 		for (int i = 0; i < n; ++i)
 		{
@@ -255,7 +251,6 @@ namespace MainWidget
 			return;
 		}
 
-		QString name = this->getNameFromUi();
 		QMultiHash<vtkDataSet*, int>* selectItems = _preWindow->getSelectItems();
 		if (selectItems == nullptr || selectItems->isEmpty())
 		{
@@ -279,6 +274,7 @@ namespace MainWidget
 		QString idstring = memList.join(";");
 		QString type = "Node";
 		if (_model == ModuleBase::MeshCell || _model == ModuleBase::BoxMeshCell) type = "Element";
+		QString name = this->getNameFromUi();
 		QString code = QString("MainWindow.createSet(\"%1\",\"%2\",\"%3\")").arg(name).arg(type).arg(idstring);
 		Py::PythonAagent::getInstance()->submit(code);
 	}

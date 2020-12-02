@@ -156,7 +156,7 @@ namespace GUI
 		/****网格相关信号***** */
 		void importMeshByNamesSig(QString name);
 		void importMeshDataSetSig(vtkDataSet* dataset);
-		void exportMeshByIDSig(QString fileName, QString suffix, int kID);
+//		void exportMeshByIDSig(QString fileName, QString suffix, int kID);
 		void editMeshSig(int dim, int kindex);
 		void updateMeshTreeSig();
 		void updateSetTreeSig();
@@ -267,10 +267,10 @@ namespace GUI
 		//打印信息
 		void printMessage(int type, QString m);
 		//导入网格
-		void importMesh(QString fileName, QString s, int modelId);
+//		void importMesh(QString fileName, QString s, int modelId);
 		//导入几何
 		void importGeometry(QStringList f);
-		//导出网格
+		//导出几何
 		void exportGeometry(QString f);
 		//更新工具栏信息
 		void updateActionsStates();

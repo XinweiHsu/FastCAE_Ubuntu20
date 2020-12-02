@@ -29,8 +29,10 @@
 #include "PostWidgets/RealTimeWindowBase.h"
 #include "Material/MaterialSingletion.h"
 #include "Material/Material.h"
-#include <QTreeWidgetItem>
 #include "python/PyAgent.h"
+//#include "NodeParameterDlg.h"
+
+#include <QTreeWidgetItem>
 #include <QAction>
 #include <QMenu>
 #include <QFileInfo>
@@ -552,7 +554,7 @@ namespace ProjectTree
 		}
 	}
 
-	QList<int>& ProjectTreeWithBasicNode::getComponentIDList()
+	const QList<int>& ProjectTreeWithBasicNode::getComponentIDList()
 	{
 		return _modelDataExtend->getComponentIDList();
 	}
@@ -605,7 +607,6 @@ namespace ProjectTree
 				p2d->removeCurve(name);
 			}
 		}
-
 		else if (_currentItem->type() == ProjectPostCounterChild)
 		{
 			const int index = _postCounterItem->indexOfChild(_currentItem);
@@ -697,9 +698,7 @@ namespace ProjectTree
 			{
 				QString name = _currentItem->text(0);
 				_realTimeWin->viewRealTimeWindow(name);
-			}
-			
-			
+			}		
 		}
 		else if (type == ProJectPost2DGraphChild)
 		{
@@ -738,9 +737,21 @@ namespace ProjectTree
 		}	
 		ProjectTreeBase::singleClicked();
 	}
+
 	void ProjectTreeWithBasicNode::doubleClicked()
 	{
-		//qDebug() << "ss";
+		if (_treeType == 1)
+		{
+			TreeItemType itemType = (TreeItemType)_currentItem->type();
+			switch (itemType)
+			{
+			case TreeItemType::ProjectSimulationSettingChild:
+			{
+				//NodeParameterDlg dlg(_treeType, _currentItem->text(0), _mainWindow);
+				break;
+			}
+			}
+		}
 	}
 
 	void ProjectTreeWithBasicNode::updateReportTree()
@@ -1067,7 +1078,36 @@ namespace ProjectTree
 		return nullptr;
 	}
 
-	
+	/*bool ProjectTreeWithBasicNode::readInForm()
+	{
+		QDesignerResource r(this);
+		QScopedPointer<DomUI> ui(r.readUi(dev));
+		if (ui.isNull()) {
+			if (errorMessageIn)
+				*errorMessageIn = r.errorString();
+			return false;
+		}
+
+		UpdateBlocker ub(this);
+		clearSelection();
+		m_selection->clearSelectionPool();
+		m_insertedWidgets.clear();
+		m_widgets.clear();
+		// The main container is cleared as otherwise
+		// the names of the newly loaded objects will be unified.
+		clearMainContainer();
+		m_undoStack.clear();
+		emit changed();
+
+		QWidget *w = r.loadUi(ui.data(), formContainer());
+		if (w) {
+			setMainContainer(w);
+			emit changed();
+		}
+		if (errorMessageIn)
+			*errorMessageIn = r.errorString();
+		return w != nullptr;
+	}*/
 
 	void ProjectTreeWithBasicNode::updateGeometrySubTree()
 	{

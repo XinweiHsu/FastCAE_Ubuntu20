@@ -7,7 +7,7 @@
 #include <QDomDocument>
 #include <QDomAttr>
 #include <QObject>
-#include <QDebug>
+#include <qDebug>
 
 namespace BCBase
 {

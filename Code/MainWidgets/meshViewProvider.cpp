@@ -1,11 +1,8 @@
 #include "meshViewProvider.h"
-
 #include "mainWindow/mainWindow.h"
 #include "MainWidgets/preWindow.h"
-
 #include "settings/busAPI.h"
 #include "settings/GraphOption.h"
-
 #include <vtkRenderer.h>
 #include <vtkSmoothPolyDataFilter.h>
 #include <vtkPolyDataNormals.h>
@@ -306,7 +303,7 @@ namespace MainWidget
 				prop->SetRepresentationToPoints();
 				c = goptions->getMeshNodeColor();
 				size = goptions->getMeshNodeSize();
-				prop->SetDiffuseColor(c.redF(), c.greenF(), c.blueF());
+				prop->SetColor(c.redF(), c.greenF(), c.blueF());
 				prop->SetPointSize(size);
 				prop->EdgeVisibilityOff();
 				break;
@@ -315,7 +312,7 @@ namespace MainWidget
 				prop->EdgeVisibilityOn();
 				c = goptions->getMeshEdgeColor();
 				size = goptions->getMeshEdgeWidth();
-				prop->SetDiffuseColor(c.redF(), c.greenF(), c.blueF());
+				prop->SetColor(c.redF(), c.greenF(), c.blueF());
 				prop->SetEdgeColor(c.redF(), c.greenF(), c.blueF());
 				prop->SetLineWidth(size);
 				break;
@@ -323,13 +320,13 @@ namespace MainWidget
 				prop->SetRepresentationToSurface();
 				prop->EdgeVisibilityOff();
 				c = goptions->getMeshFaceColor();
-				prop->SetDiffuseColor(c.redF(), c.greenF(), c.blueF());
+				prop->SetColor(c.redF(), c.greenF(), c.blueF());
 				prop->SetEdgeColor(c.redF(), c.greenF(), c.blueF());
 				prop->SetLineWidth(size);
 				break;
 			case MainWidget::SurfaceWithEdge:
 				c = goptions->getMeshFaceColor();
-				prop->SetDiffuseColor(c.redF(), c.greenF(), c.blueF());
+				prop->SetColor(c.redF(), c.greenF(), c.blueF());
 				c = goptions->getMeshEdgeColor();
 				prop->SetRepresentationToSurface();
 				prop->SetEdgeColor(c.redF(), c.greenF(), c.blueF());
@@ -340,6 +337,15 @@ namespace MainWidget
 			default:
 				break;
 			}
+			bool enable = false;
+			QColor spc = k->getSpecificColor(enable);
+			double c[3] = { spc.redF(), spc.greenF(), spc.blueF() };
+			if (enable)
+			{
+				prop->SetColor(spc.redF(), spc.greenF(), spc.blueF());
+				prop->SetEdgeColor(spc.redF(), spc.greenF(), spc.blueF());
+			}
+				
 		}
 		_preWindow->reRender();
 	}
@@ -593,8 +599,8 @@ namespace MainWidget
 	{
 		Setting::GraphOption* option = Setting::BusAPI::instance()->getGraphOption();
 		QColor hicolor = option->getHighLightColor();
-		_highLightActor->GetProperty()->SetDiffuseColor(hicolor.redF(), hicolor.greenF(), hicolor.blueF());
-		_boxActor->GetProperty()->SetDiffuseColor(hicolor.redF(), hicolor.greenF(), hicolor.blueF());
+		_highLightActor->GetProperty()->SetColor(hicolor.redF(), hicolor.greenF(), hicolor.blueF());
+		_boxActor->GetProperty()->SetColor(hicolor.redF(), hicolor.greenF(), hicolor.blueF());
 	}
 
 	/*

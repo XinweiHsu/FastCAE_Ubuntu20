@@ -12,12 +12,12 @@
 
 namespace MeshData
 {
-	CNTMdataExchange::CNTMdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int writeFileKid) :
+	CNTMdataExchange::CNTMdataExchange(const QString &fileName, MeshOperation operation, GUI::MainWindow *mw, int modelId) :
 		MeshThreadBase(fileName, operation, mw),
 		_fileName(fileName),
 		_meshData(MeshData::getInstance()),
 		_operation(operation),
-		_writeFileKid(writeFileKid)
+		_modelId(modelId)
 	{
 
 	}
@@ -99,7 +99,7 @@ namespace MeshData
 
 	bool CNTMdataExchange::write()
 	{
-		if (_writeFileKid < 1)	return false;
+		if (_modelId < 1)	return false;
 	}
 
 	bool CNTMdataExchange::readNodes()

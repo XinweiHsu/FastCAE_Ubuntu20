@@ -24,7 +24,7 @@ namespace GUI
 		static void init(GUI::MainWindow* m,GUI::SignalHandler* sg);
 		static void clearData();
 		static void importMesh(char* f, char* s, int modelId);
-		static void exportMesh(char* f,char* s);
+		static void exportMesh(char* f,char* s, int modelId);
 		static void importGeometry(char* f);
 		static void exportGeometry(char* f);
 		static void openProjectFile(char* f);
@@ -163,7 +163,7 @@ extern "C"
 	void MAINWINDOWAPI redo();
 	void MAINWINDOWAPI clearData();
 	void MAINWINDOWAPI importMesh(char* f, char* s, int modelId);
-	void MAINWINDOWAPI exportMesh(char* f, char* s);
+	void MAINWINDOWAPI exportMesh(char* f, char* s, int modelId);
 	void MAINWINDOWAPI importGeometry(char* f);
 	void MAINWINDOWAPI exportGeometry(char* f);
 	void MAINWINDOWAPI openProjectFile(char* f);

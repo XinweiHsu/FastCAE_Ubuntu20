@@ -5,11 +5,15 @@
     <name>LineEditDialog</name>
     <message>
         <location filename="../../SelfDefObject/LineEditDialog.ui" line="14"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_LineEditDialog.h" line="71"/>
+        <location filename="../../SelfDefObject/release/qui/ui_LineEditDialog.h" line="71"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/LineEditDialog.ui" line="22"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_LineEditDialog.h" line="72"/>
+        <location filename="../../SelfDefObject/release/qui/ui_LineEditDialog.h" line="72"/>
         <source>Des</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18,11 +22,15 @@
     <name>ParaMore</name>
     <message>
         <location filename="../../SelfDefObject/ParaMore.ui" line="14"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaMore.h" line="56"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaMore.h" line="56"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaMore.ui" line="44"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaMore.h" line="57"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaMore.h" line="57"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31,31 +39,43 @@
     <name>ParaTabViewer</name>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="14"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="89"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="89"/>
         <source>Table Viewer</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="35"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="90"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="90"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="42"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="91"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="91"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="49"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="92"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="92"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="56"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="93"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="93"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
         <location filename="../../SelfDefObject/ParaTabViewer.ui" line="63"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_ParaTabViewer.h" line="94"/>
+        <location filename="../../SelfDefObject/release/qui/ui_ParaTabViewer.h" line="94"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -64,6 +84,8 @@
     <name>SelfDefLineEdit</name>
     <message>
         <location filename="../../SelfDefObject/selfdeflineedit.ui" line="14"/>
+        <location filename="../../SelfDefObject/debug/qui/ui_selfdeflineedit.h" line="53"/>
+        <location filename="../../SelfDefObject/release/qui/ui_selfdeflineedit.h" line="53"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>

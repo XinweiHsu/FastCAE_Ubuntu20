@@ -5,7 +5,7 @@
 #include "geometry/GeoComponent.h"
 #include "DialogGeometryRename.h"
 #include "DataProperty/DataBase.h"
-#include "mainWindow/mainWindow.h"
+#include "mainwindow/mainWindow.h"
 
 namespace MainWidget
 {

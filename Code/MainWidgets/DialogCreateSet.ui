@@ -130,7 +130,7 @@
       <string/>
      </property>
      <property name="text">
-      <string>Find ConplanarIds</string>
+      <string>Find Conplanar Points or Cells</string>
      </property>
      <property name="checked">
       <bool>true</bool>

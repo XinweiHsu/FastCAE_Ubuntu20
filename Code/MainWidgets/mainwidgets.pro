@@ -45,6 +45,7 @@ win32{
   -L../../output/bin -lGeometryWidgets \
 #  -L../../output/bin -lGmshModule \
 #  -L../../output/bin -lMainWindow \
+  -L../../output/bin -lCurveAnalyse \
 
  
   Debug:CONFIG	    	+=  console
@@ -76,7 +77,7 @@ win32{
   -L../../output/bin_d -lGeometryWidgets \
 #  -L../../output/bin_d -lGmshModule \
 #  -L../../output/bin_d -lMainWindow \
-
+  -L../../output/bin_d -lCurveAnalyse \
   
   message("Windows mainWidgets build")
   

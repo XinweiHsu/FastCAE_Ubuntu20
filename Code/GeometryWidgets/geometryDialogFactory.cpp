@@ -22,6 +22,7 @@
 #include "dialogMakeRevol.h"
 #include "dialogGeoSplitter.h"
 #include "dialogMakeFillHole.h"
+#include "dialogMakeFillGap.h"
 #include "dialogMakeRemoveSurface.h"
 namespace GeometryWidget
 {
@@ -77,6 +78,8 @@ namespace GeometryWidget
 			dlg = new MakeFillHoleDialog(m, p, set); break;
 		case  Geometry::GeometryParaRemoveSurface:
 			dlg = new MakeRemoveSurfaceDialog(m, p, set); break;
+		case  Geometry::GeometryParaFillGap:
+			dlg = new MakeFillGapDialog(m, p, set); break;
 		default:
 			break;
 		}

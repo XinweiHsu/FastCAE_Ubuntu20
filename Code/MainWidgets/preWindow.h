@@ -45,7 +45,7 @@ namespace MainWidget
 		
 		Geometry::GeometrySet* getSelectedGeoSet();
 		//获取选择的几何
-		QMultiHash<Geometry::GeometrySet*, int> getGeoSelectItems();
+		QMultiHash<Geometry::GeometrySet*, int>* getGeoSelectItems();
 		//设置已经选择的几何
 		ModuleBase::SelectModel getSelectModel();
 		QMultiHash<vtkDataSet*, int>* getSelectItems();

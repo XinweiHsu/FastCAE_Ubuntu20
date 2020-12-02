@@ -1,13 +1,14 @@
 #include "preWindow.h"
-#include "moduleBase/ModuleType.h"
+#include "modulebase/moduletype.h"
 #include "DialogCreateGeoComponent.h"
 #include "ui_DialogCreateGeoComponent.h"
-#include "moduleBase/ModuleType.h"
-#include "geometry/geometryData.h"
+#include "modulebase/moduletype.h"
+#include "geometry/geometrydata.h"
 #include "geometry/geometrySet.h"
 #include "mainWindow/mainWindow.h"
 #include "python/PyAgent.h"
 #include <qpushbutton.h>
+#include <qmessagebox.h>
 #include <qdebug.h>
 
 namespace MainWidget
@@ -53,24 +54,31 @@ namespace MainWidget
 
 	void CreateGeoComponentDialog::on_buttonOk()
 	{
-		QString name = _ui->nameLineEdit->text();
-		if (name.isEmpty())
-			name = _ui->nameLineEdit->placeholderText();
-
-		QStringList gSetIDs, itemIDs;
 		auto selectedItems = _preWindow->getGeoSelectItems();
-		QMutableHashIterator<Geometry::GeometrySet*, int> it(selectedItems);
+		if (selectedItems == nullptr || selectedItems->isEmpty())
+		{
+			QMessageBox::warning(this, tr("Warning"), tr("No Point or Line Surface Body selected !"));
+			QDialog::reject();
+			return;
+		}
+
+		QStringList geoSetIDs, geoSetItemIDs;
+		QMutableHashIterator<Geometry::GeometrySet*, int> it(*selectedItems);
 		while (it.hasNext())
 		{
 			it.next();
-			gSetIDs << QString::number(it.key()->getID());
-			itemIDs << QString::number(it.value());
+			geoSetIDs << QString::number(it.key()->getID());
+			geoSetItemIDs << QString::number(it.value());
 		}
-		QString type = Geometry::GeoComponent::gcTypeToString(_type);
-		QString strgIDs = gSetIDs.join(";");
-		QString strItemIDs = itemIDs.join(";");
 
-		QString code = QString("MainWindow.createGeoComponent(\"%1\",\"%2\",\"%3\",\"%4\")").arg(name).arg(type).arg(strgIDs).arg(strItemIDs);
+		QString qType = Geometry::GeoComponent::gcTypeToString(_type);
+		QString qGeoSetIDs = geoSetIDs.join(";");
+		QString qGeoSetItemIDs = geoSetItemIDs.join(";");
+		QString qGeoComponentName = _ui->nameLineEdit->text();
+		if (qGeoComponentName.isEmpty())
+			qGeoComponentName = _ui->nameLineEdit->placeholderText();
+
+		QString code = QString("MainWindow.createGeoComponent(\"%1\",\"%2\",\"%3\",\"%4\")").arg(qGeoComponentName).arg(qType).arg(qGeoSetIDs).arg(qGeoSetItemIDs);
 		Py::PythonAagent::getInstance()->submit(code);
 	}
 }

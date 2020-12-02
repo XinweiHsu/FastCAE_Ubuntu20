@@ -197,7 +197,7 @@ namespace MainWidget
 		_sketchProvider->setSketchType(t);
 	}
 
-	QMultiHash<Geometry::GeometrySet*, int> PreWindow::getGeoSelectItems()
+	QMultiHash<Geometry::GeometrySet*, int>* PreWindow::getGeoSelectItems()
 	{
 		return _geoProvider->getGeoSelectItems();
 	}

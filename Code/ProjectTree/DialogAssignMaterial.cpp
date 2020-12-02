@@ -10,7 +10,7 @@
 #include "Material/MaterialSingletion.h"
 #include "Material/Material.h"
 #include "python/PyAgent.h"
-#include <QDebug>
+#include <qDebug>
 
 namespace ProjectTree
 {
